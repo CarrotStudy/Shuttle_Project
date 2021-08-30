@@ -1,0 +1,36 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test' /** 대표 - 16~17 코드는 Springboot 생성시 자동 할당되는 코드 **/
+	compileOnly 'org.projectlombok:lombok' /** 대표 - lombok 어노테이션 사용 가능 **/
+	runtimeOnly 'mysql:mysql-connector-java' /** 대표 - mysql 커넥 **/
+	annotationProcessor 'org.projectlombok:lombok' /** 대표 - lombok 어노테이션 사용 가능 **/
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0' /** mybatis 사용 **/
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' /** thymeleaf 사용 **/
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc' /** 대표 - jdbc? **/
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc' /** 대표 - jdbc? **/
+}
+
+test {
+	useJUnitPlatform()
+}

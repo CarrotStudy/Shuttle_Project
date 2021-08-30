@@ -1,0 +1,13 @@
+server :
+  port : 0830
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: springboot.shuttle.domain
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 12345678
+    url: jdbc:mysql://shuttle.cfptkyo6yq2m.us-east-2.rds.amazonaws.com/Shuttle?useSSL=false&allowPublicKeyRetrieval=true
+    username: user
