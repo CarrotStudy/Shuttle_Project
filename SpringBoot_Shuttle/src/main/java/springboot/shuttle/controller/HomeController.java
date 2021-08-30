@@ -11,7 +11,7 @@ import springboot.shuttle.service.MemberService;
 import java.util.List;
 
 @Controller /** 대표 - Controller 어노테이션이 적용 된 클래스는 Controller임을 나타내고 bean으로 등 **/
-@RequiredArgsConstructor /** 대표 - 쉽게 생각하면 Getter, Setter 생성 **/
+@RequiredArgsConstructor /** 대표 - 쉽게 생각하면 Getter, Setter 생성 허나 Getter Setter보다 좋음. **/
 @Slf4j
 public class HomeController {
 
@@ -24,4 +24,9 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/vue")
+    public String vueHome(){
+        log.info("여기 : " + memberService.findAll());
+        return "vue/index";
+    }
 }
