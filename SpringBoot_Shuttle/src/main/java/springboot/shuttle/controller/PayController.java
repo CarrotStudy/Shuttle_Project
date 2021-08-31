@@ -10,7 +10,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PayController {
 
     @GetMapping("/pay")
-    public String pay(){
+    public String kakaPay(){
         return "pay/pay";
     }
+
+    @GetMapping("/pay2")
+    public String inicisPay(){
+        return "pay/pay2";
+    }
+
 }
