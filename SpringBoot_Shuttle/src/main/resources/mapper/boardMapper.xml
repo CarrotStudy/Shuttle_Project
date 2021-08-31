@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-
-<mapper namespace="springboot.shuttle.mapper.BoardMapper"> <!-- DP_인터페이스를 묶어줘야 함 경로 알려주는 것 -->
-
-</mapper>
