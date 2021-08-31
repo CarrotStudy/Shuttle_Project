@@ -21,7 +21,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(){
-        log.info("여기 : " + memberService.findAll());
         return "index";
     }
 

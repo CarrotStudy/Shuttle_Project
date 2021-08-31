@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="springboot.shuttle.mapper.BoardMapper"> <!-- namespace는 xml mapper의 sql쿼리문과 mapper 인터페이스의 메서드를 매핑시키는 역-->
+
+    <insert id="insertBoard" parameterType="Board">
+        insert into board (bno, title, content, writer, view_cnt, delete_yn, insert_time, update_time)
+        values ( #{bno}
+        , #{title}
+        , #{content}
+        , #{writer}
+        , 0
+        , 'N'
+        , NOW()
+        , NULL
+        )
+    </insert>
+
+    <select id="detailBoard" parameterType="long" resultType="Board">
+        select * from board where delete_yn = 'N' and bno = ${bno}
+    </select>
+
+    <update id="updateBoard" parameterType="Board">
+        update board set
+            update_time = now(),
+            title = ${title},
+            content = ${content}
+        where bno = ${bno}
+    </update>
+
+    <delete id="deleteBoard" parameterType="long">
+        update board set delete_yn = 'Y' where bno = ${bno}
+    </delete>
+
+    <select id="listBoard" parameterType="Board" resultType="Board">
+        select * from board where delete_yn = 'N' order by bno desc
+    </select>
+
+    <select id="countBoard" parameterType="Board" resultType="int">
+        select count(*) from board where delete_yn = 'N'
+    </select>
+</mapper>

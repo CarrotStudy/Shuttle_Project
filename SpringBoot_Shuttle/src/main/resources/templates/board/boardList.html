@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="board/layout/basic">
+<th:block layout:fragment="title">
+    <title>Shuttle</title>
+</th:block>
+
+<th:block layout:fragment="search">
+    <form action="#" id="searchform-header" class="searchform js__toggle active pull-right">
+        <input type="search" placeholder="Search..." class="input-search">
+        <button class="mdi mdi-magnify button-search" type="submit">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+    </form>
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="table-responsive clearfix">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일</th>
+                <th>조회 수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty( boardList ) == false}" th:each="row : ${boardList}">
+                <td scope="row" th:text="${row.bno}"></td>
+                <td class="text-left">
+                    <a th:href="@{/board/view.do( bno=${row.bno} )}" th:text="${row.title}"></a>
+                </td>
+                <td th:text="${row.writer}"></td>
+                <td th:text="${#temporals.format( row.insertTime, 'yyyy-MM-dd' )}"></td>
+                <td th:text="${row.viewCnt}"></td>
+            </tr>
+            <tr th:unless="${not #lists.isEmpty( boardList )}">
+                <td colspan="5">조회된 결과가 없습니다.</td>
+            </tr>
+            <!-- 29번째의 th:if는 우리가 아는 if고 38번째의 th:unless는 else문임 th의 else문은 if에 들어가는 조건을 동일하게 넣어줘야 한다 -->
+            <!-- 29번째의 #lists.isEmpty( boardList ) 는 if 조건문이며 Controller에서 보낸 boardList값이 비어있는지 체크 하는 문이다. 또한 not #, !#, == false 기호에 맞게 사용 -->
+            <!-- 29번째의 th:each는 자바의 forEach와 유사한 기능 여기서는 row라는 변수 명으로 boardList에 있는 값들을 순환하여 데이터를 보냄 -->
+            <!-- 30번 td는 글 번호 출력 --> <!-- 32번 td는 게시글 제목을 클릭하면 상세 페이지를 의미하는 URL호출 구현 예정 -->
+            <!-- 34번 td는 글쓴이 출력 --> <!-- 35번 td는 시간 출력 --> <!-- 36번 td는 조회수를 텍스트 형식으로 출력 -->
+            </tbody>
+        </table>
+
+        <div class="btn_wrap text-right">
+            <a th:href="@{/board/add}" class="btn btn-primary waves-effect waves-light">Write</a>
+        </div>
+
+        <th:block layout:fragment="paging">
+            <nav aria-label="Page navigation" class="text-center">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </th:block>
+    </div>
+</th:block>
+</html>

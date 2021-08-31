@@ -1,0 +1,11 @@
+CREATE TABLE board (
+    bno INT NOT NULL AUTO_INCREMENT COMMENT '번호 (PK)',
+    title VARCHAR(100) NOT NULL COMMENT '제목',
+    content VARCHAR(3000) NOT NULL COMMENT '내용',
+    writer VARCHAR(20) NOT NULL COMMENT '작성자',
+    view_cnt INT NOT NULL DEFAULT 0 COMMENT '조회 수',
+    insert_time DATETIME NOT NULL DEFAULT NOW() COMMENT '등록일',
+    update_time DATETIME NULL COMMENT '수정일',
+    delete_yn ENUM('Y', 'N') NOT NULL DEFAULT 'N' COMMENT '삭제 여부',
+    PRIMARY KEY (bno)
+)  COMMENT '게시판';
