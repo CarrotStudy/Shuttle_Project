@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript">
+IMP.init('imp84907545'); //iamport 대신 자신의 "가맹점 식별코드"를 사용하시면 됩니다
+IMP.request_pay({
+	merchant_uid : 'merchant_' + new Date().getTime(),
+	name : '노르웨이 회전 의자',
+	amount : 64900,
+	buyer_email : "gildong@gmail.com",
+	buyer_name : "홍길동",
+	buyer_tel : '010-1234-5678',
+	buyer_addr : "서울특별시 강남구 신사동",
+	buyer_postcode : "01181"
+  }, function (rsp) { // callback
+          if (rsp.success) {
+              alert("결제성공");
+          } else {
+              alert("결제 실패 :" + rsp.error_msg);
+          }
+      });
+</script>
+</html>
