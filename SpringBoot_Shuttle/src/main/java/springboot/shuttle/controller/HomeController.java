@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import springboot.shuttle.domain.Member;
 import springboot.shuttle.service.MemberService;
 
@@ -24,9 +25,4 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/vue")
-    public String vueHome(){
-        log.info("여기 : " + memberService.findAll());
-        return "vue/index";
-    }
 }
