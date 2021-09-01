@@ -15,13 +15,13 @@ public class Board {
     private String title; //글제목
     private String content; //글내용
     private String writer; //작성자
-    private int viewCnt; //조회수
-    private String noticeYn; //공지여부
-    private String secretYn; //비밀여부
-    private String deleteYn; //삭제여부
-    private LocalDateTime insertTime; //등록일
-    private LocalDateTime updateTime; //수정일
-    private LocalDateTime deleteTime; //삭제여부
+    private int view_Cnt; //조회수
+    private String notice_Yn; //공지여부
+    private String secret_Yn; //비밀여부
+    private String delete_Yn; //삭제여부
+    private LocalDateTime insert_Time; //등록일
+    private LocalDateTime update_Time; //수정일
+    private LocalDateTime delete_Time; //삭제여부
 
 
 }

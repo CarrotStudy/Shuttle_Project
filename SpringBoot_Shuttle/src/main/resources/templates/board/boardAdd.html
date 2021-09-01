@@ -11,16 +11,16 @@
         <input type="hidden" th:if="*{bno != null and bno > 0}" th:field="*{bno}" />
 
         <div class="form-group">
-          <label for="noticeYn" class="col-sm-2 control-label">공지글 설정</label>
+          <label for="notice_Yn" class="col-sm-2 control-label">공지글 설정</label>
           <div class="col-sm-10" style="margin-top: 10px;">
-            <input type="checkbox" th:value="*{noticeYn}" id="noticeYn" name="noticeYn" th:checked="*{#strings.equals( noticeYn, 'Y' )}" />
+            <input type="checkbox" th:value="*{notice_Yn}" id="notice_Yn" name="notice_Yn" th:checked="*{#strings.equals( notice_Yn, 'Y' )}" />
           </div>
         </div>
 
         <div class="form-group">
-          <label for="secretYn" class="col-sm-2 control-label">비밀글 설정</label>
+          <label for="secret_Yn" class="col-sm-2 control-label">비밀글 설정</label>
           <div class="col-sm-10" style="margin-top: 10px;">
-            <input type="checkbox" th:value="*{secretYn}" id="secretYn" name="secretYn" th:checked="*{#strings.equals( secretYn, 'Y' )}" />
+            <input type="checkbox" th:value="*{secret_Yn}" id="secret_Yn" name="secret_Yn" th:checked="*{#strings.equals( secret_Yn, 'Y' )}" />
           </div>
         </div>
 
@@ -46,7 +46,7 @@
         </div>
 
         <div class="btn_wrap text-center">
-          <a th:href="@{/boardList}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+          <a th:href="@{/board/list}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
           <button type="submit" class="btn btn-primary waves-effect waves-light">저장하기</button>
         </div>
       </form>
@@ -60,8 +60,8 @@
 
               function registerBoard(form) {
 
-                  form.noticeYn.value = form.noticeYn.checked == false ? 'N' : 'Y';
-                  form.secretYn.value = form.secretYn.checked == false ? 'N' : 'Y';
+                  form.notice_Yn.value = form.notice_Yn.checked == false ? 'N' : 'Y';
+                  form.secret_Yn.value = form.secret_Yn.checked == false ? 'N' : 'Y';
 
                   var result = (
                              isValid(form.title, "제목", null, null)

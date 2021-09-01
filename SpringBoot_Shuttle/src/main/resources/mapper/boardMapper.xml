@@ -28,8 +28,8 @@
         , #{content}
         , #{writer}
         , 0
-        , IFNULL(#{noticeYn}, 'N')
-        , IFNULL(#{secretYn}, 'N')
+        , IFNULL(#{notice_Yn}, 'N')
+        , IFNULL(#{secret_Yn}, 'N')
         , 'N'
         , NOW()
         , NULL
@@ -55,8 +55,8 @@
         , title = #{title}
         , content = #{content}
         , writer = #{writer}
-        , notice_yn = IFNULL(#{noticeYn}, 'N')
-        , secret_yn = IFNULL(#{secretYn}, 'N')
+        , notice_yn = IFNULL(#{notice_Yn}, 'N')
+        , secret_yn = IFNULL(#{secret_Yn}, 'N')
         WHERE
         bno = #{bno}
     </update>

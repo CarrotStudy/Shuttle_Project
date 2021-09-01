@@ -42,7 +42,7 @@ public class BoardService {
 
         Board board = boardMapper.detailBoard(bno);
         log.info("여기는 ? : " + board);
-        if (board != null && "N".equals(board.getDeleteYn())) {
+        if (board != null && "N".equals(board.getDelete_Yn())) {
             queryResult = boardMapper.deleteBoard(bno);
         }
 
