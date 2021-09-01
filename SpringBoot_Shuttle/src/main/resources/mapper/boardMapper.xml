@@ -4,40 +4,91 @@
 
 <mapper namespace="springboot.shuttle.mapper.BoardMapper"> <!-- namespace는 xml mapper의 sql쿼리문과 mapper 인터페이스의 메서드를 매핑시키는 역-->
 
+    <sql id="boardColumns">
+        bno
+        , title
+        , content
+        , writer
+        , view_cnt
+        , notice_yn
+        , secret_yn
+        , delete_yn
+        , insert_time
+        , update_time
+        , delete_time
+    </sql>
+
+
     <insert id="insertBoard" parameterType="Board">
-        insert into board (bno, title, content, writer, view_cnt, delete_yn, insert_time, update_time)
-        values ( #{bno}
+        INSERT INTO board (
+        <include refid="boardColumns" />
+        ) VALUES (
+          #{bno}
         , #{title}
         , #{content}
         , #{writer}
         , 0
+        , IFNULL(#{noticeYn}, 'N')
+        , IFNULL(#{secretYn}, 'N')
         , 'N'
         , NOW()
+        , NULL
         , NULL
         )
     </insert>
 
     <select id="detailBoard" parameterType="long" resultType="Board">
-        select * from board where delete_yn = 'N' and bno = ${bno}
+        SELECT
+        <include refid="boardColumns" />
+        FROM
+        board
+        WHERE
+        delete_yn = 'N'
+        AND
+        bno = #{bno}
     </select>
 
     <update id="updateBoard" parameterType="Board">
-        update board set
-            update_time = now(),
-            title = ${title},
-            content = ${content}
-        where bno = ${bno}
+        UPDATE board
+        SET
+        update_time = NOW()
+        , title = #{title}
+        , content = #{content}
+        , writer = #{writer}
+        , notice_yn = IFNULL(#{noticeYn}, 'N')
+        , secret_yn = IFNULL(#{secretYn}, 'N')
+        WHERE
+        bno = #{bno}
     </update>
 
-    <delete id="deleteBoard" parameterType="long">
-        update board set delete_yn = 'Y' where bno = ${bno}
-    </delete>
+    <update id="deleteBoard" parameterType="long">
+        UPDATE board
+        SET
+            delete_yn = 'Y'
+            , delete_time = NOW()
+        WHERE
+            bno = #{bno}
+    </update>
 
     <select id="listBoard" parameterType="Board" resultType="Board">
-        select * from board where delete_yn = 'N' order by bno desc
+        SELECT
+        <include refid="boardColumns" />
+        FROM
+        board
+        WHERE
+        delete_yn = 'N'
+        ORDER BY
+        notice_yn ASC,
+        bno DESC,
+        insert_time DESC
     </select>
 
     <select id="countBoard" parameterType="Board" resultType="int">
-        select count(*) from board where delete_yn = 'N'
+        SELECT
+        COUNT(*)
+        FROM
+        board
+        WHERE
+        delete_yn = 'N'
     </select>
 </mapper>

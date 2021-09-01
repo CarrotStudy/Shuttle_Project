@@ -45,9 +45,9 @@ class MapperTests {
 
     @Test
     public void testOfDelete() {
-        int result = boardMapper.deleteBoard((long) 1);
+        int result = boardMapper.deleteBoard((long) 54);
         if (result == 1) {
-            Board board = boardMapper.detailBoard((long) 1);
+            Board board = boardMapper.detailBoard((long) 54);
             try {
                 String boardJson = new ObjectMapper().writeValueAsString(board);
 

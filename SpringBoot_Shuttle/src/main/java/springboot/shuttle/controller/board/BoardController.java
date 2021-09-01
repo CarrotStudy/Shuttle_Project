@@ -73,4 +73,49 @@ public class BoardController {
 
         return "redirect:/board/list";
     }
+
+    @GetMapping(value = "/board/detail")
+    public String openBoardDetail(@RequestParam(value = "bno", required = false) Long bno, Model model) {
+        if (bno == null) {
+            // TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
+            return "redirect:/board/list";
+        }
+
+        Board board = boardService.detailBoard(bno);
+        log.info("왜 널로 찍히는거야 씨발 : " + board);
+        if (board == null || "Y".equals(board.getDeleteYn())) {
+            // TODO => 없는 게시글이거나, 이미 삭제된 게시글이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
+            return "redirect:/board/list";
+        }
+        model.addAttribute("board", board);
+
+        return "board/boardDetail";
+    }
+
+    @PostMapping(value = "/board/delete")
+    public String deleteBoard(@RequestParam(value = "bno", required = false) Long bno) {
+
+        if (bno == null) {
+            // TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
+            return "redirect:/board/list";
+        }
+
+        try {
+            boolean isDeleted = boardService.deleteBoard(bno);
+            log.info("여기 : " + isDeleted);
+            if (isDeleted == false) {
+                // TODO => 게시글 삭제에 실패하였다는 메시지를 전달
+            }
+        } catch (DataAccessException e) {
+            // TODO => 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
+
+        } catch (Exception e) {
+            // TODO => 시스템에 문제가 발생하였다는 메시지를 전달
+        }
+
+        return "redirect:/board/list";
+    }
+
+    /* 게시글 삭제 할 때 필요한 bno 글 번호를 파라미터로 받음 */
+    /* try문에서 deleteBoard(bno)를 성공하면 true 실패하면 false를 iseDeleted에 주고 그에 따른 메세지 전달 */
 }

@@ -1,5 +1,6 @@
 package springboot.shuttle.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springboot.shuttle.domain.Board;
@@ -9,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service /* 해당 클래스가 비지니스 로직을 담당하는 서비스 클래스임을 의미하는 어노테이션 */
+@Slf4j
 public class BoardService {
 
     @Autowired
@@ -39,8 +41,8 @@ public class BoardService {
         int queryResult = 0;
 
         Board board = boardMapper.detailBoard(bno);
-
-        if (board != null) {
+        log.info("여기는 ? : " + board);
+        if (board != null && "N".equals(board.getDeleteYn())) {
             queryResult = boardMapper.deleteBoard(bno);
         }
 
