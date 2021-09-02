@@ -1,4 +1,4 @@
-package springboot.shuttle.controller.board;
+package springboot.shuttle.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +35,17 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
 
         return "/board/boardList";
+    }
+    /* boardServcie.listBoard() 로 board list들을 가져와 boardList 변수에 저장하여 model.addAttribute로 뷰로 전달 */
+
+    @GetMapping("/board/list1")
+    public String boardListForm1(Model model) {
+
+        List<Board> boardList = boardService.listBoard();
+        log.info("여기 : " + boardList);
+        model.addAttribute("boardList", boardList);
+
+        return "/board/boardList1";
     }
     /* boardServcie.listBoard() 로 board list들을 가져와 boardList 변수에 저장하여 model.addAttribute로 뷰로 전달 */
 
@@ -82,7 +93,6 @@ public class BoardController {
         }
 
         Board board = boardService.detailBoard(bno);
-        log.info("왜 널로 찍히는거야 씨발 : " + board);
         if (board == null || "Y".equals(board.getDelete_Yn())) {
             // TODO => 없는 게시글이거나, 이미 삭제된 게시글이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
             return "redirect:/board/list";
@@ -102,7 +112,6 @@ public class BoardController {
 
         try {
             boolean isDeleted = boardService.deleteBoard(bno);
-            log.info("여기 : " + isDeleted);
             if (isDeleted == false) {
                 // TODO => 게시글 삭제에 실패하였다는 메시지를 전달
             }
