@@ -38,17 +38,6 @@ public class BoardController {
     }
     /* boardServcie.listBoard() 로 board list들을 가져와 boardList 변수에 저장하여 model.addAttribute로 뷰로 전달 */
 
-    @GetMapping("/board/list1")
-    public String boardListForm1(Model model) {
-
-        List<Board> boardList = boardService.listBoard();
-        log.info("여기 : " + boardList);
-        model.addAttribute("boardList", boardList);
-
-        return "/board/boardList1";
-    }
-    /* boardServcie.listBoard() 로 board list들을 가져와 boardList 변수에 저장하여 model.addAttribute로 뷰로 전달 */
-
     @GetMapping("/board/add")
     public String boardAddForm(@RequestParam(value = "bno", required = false) Long bno, Model model) {
 
