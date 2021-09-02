@@ -58,7 +58,7 @@ public class BoardController {
     /* 위에서 말했듯이 항상 bno가 필요하진 않으니 기본 값을 false로 해서 전달 만약 false로 지정하지 않으면 전달 값이 null 일 때 오류가 남 */
 
     @PostMapping("/board/add")
-    public String boardAdd(final Board board) {
+    public String boardAdd1(final Board board) {
         try {
             boolean isRegistered = boardService.registerBoard(board);
             if (isRegistered == false) {
@@ -91,9 +91,8 @@ public class BoardController {
         return "board/boardDetail";
     }
 
-    @PostMapping(value = "/board/delete")
+    @GetMapping(value = "/board/delete")
     public String deleteBoard(@RequestParam(value = "bno", required = false) Long bno) {
-
         if (bno == null) {
             // TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
             return "redirect:/board/list";

@@ -30,7 +30,6 @@ dependencies {
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' /** Thymeleaf Layout 사용 **/
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc' /** 대표 - jdbc? **/
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc' /** 대표 - jdbc? **/
-
 }
 
 test {
