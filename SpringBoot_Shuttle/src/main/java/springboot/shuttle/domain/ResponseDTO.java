@@ -1,4 +1,4 @@
-package springboot.shuttle.dto;
+package springboot.shuttle.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
