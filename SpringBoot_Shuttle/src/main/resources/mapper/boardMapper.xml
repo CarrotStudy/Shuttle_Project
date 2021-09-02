@@ -21,74 +21,75 @@
 
     <insert id="insertBoard" parameterType="Board">
         INSERT INTO board (
-        <include refid="boardColumns" />
+                <include refid="boardColumns" />
         ) VALUES (
-          #{bno}
-        , #{title}
-        , #{content}
-        , #{writer}
-        , 0
-        , IFNULL(#{notice_Yn}, 'N')
-        , IFNULL(#{secret_Yn}, 'N')
-        , 'N'
-        , NOW()
-        , NULL
-        , NULL
+              #{bno}
+            , #{title}
+            , #{content}
+            , #{writer}
+            , 0
+            , IFNULL(#{notice_Yn}, 'N')
+            , IFNULL(#{secret_Yn}, 'N')
+            , 'N'
+            , NOW()
+            , NULL
+            , NULL
         )
     </insert>
 
     <select id="detailBoard" parameterType="long" resultType="Board">
         SELECT
-        <include refid="boardColumns" />
+                <include refid="boardColumns" />
         FROM
-        board
+                board
         WHERE
-        delete_yn = 'N'
+                delete_yn = 'N'
         AND
-        bno = #{bno}
+                bno = #{bno}
     </select>
 
     <update id="updateBoard" parameterType="Board">
-        UPDATE board
+        UPDATE
+                board
         SET
-        update_time = NOW()
-        , title = #{title}
-        , content = #{content}
-        , writer = #{writer}
-        , notice_yn = IFNULL(#{notice_Yn}, 'N')
-        , secret_yn = IFNULL(#{secret_Yn}, 'N')
+                update_time = NOW(),
+                title = #{title},
+                content = #{content},
+                writer = #{writer},
+                notice_yn = IFNULL(#{notice_Yn}, 'N'),
+                secret_yn = IFNULL(#{secret_Yn}, 'N')
         WHERE
-        bno = #{bno}
+                bno = #{bno}
     </update>
 
     <update id="deleteBoard" parameterType="long">
         UPDATE board
         SET
-            delete_yn = 'Y'
-            , delete_time = NOW()
+                delete_yn = 'Y',
+                delete_time = NOW()
         WHERE
-            bno = #{bno}
+                bno = #{bno}
     </update>
 
     <select id="listBoard" parameterType="Board" resultType="Board">
         SELECT
-        <include refid="boardColumns" />
+                <include refid="boardColumns" />
         FROM
-        board
+                board
         WHERE
-        delete_yn = 'N'
+                delete_yn = 'N'
         ORDER BY
-        notice_yn ASC,
-        bno DESC,
-        insert_time DESC
+                notice_yn ASC,
+                bno DESC,
+                insert_time DESC
     </select>
 
     <select id="countBoard" parameterType="Board" resultType="int">
         SELECT
-        COUNT(*)
+                COUNT(*)
         FROM
-        board
+                board
         WHERE
-        delete_yn = 'N'
+                delete_yn = 'N'
     </select>
 </mapper>
