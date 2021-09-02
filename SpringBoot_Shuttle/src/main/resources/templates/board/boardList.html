@@ -49,7 +49,7 @@
                             <!-- Product image--><!--th:src="|/images/${product.productImage.getStoreImageName()}|"-->
                             <!-- 임시 <img class="card-img-top" th:onclick="|location.href='@{|/product/${product.productId}|}'|" th:src="|/images/${product.productImage.getStoreImageName()}|" width="250px" height="250px" /> -->
                             <!-- Product details-->
-                            <div class="card-body p-4">
+                            <div class="card-body p-4" >
                                 <div class="text-center">
                                     <!-- Product name-->
                                     <h5><a th:href="@{/board/detail( bno=${board.bno} )}" th:text="${board.title}"></a></h5>
@@ -107,7 +107,7 @@
 <!-- SimpleLightbox plugin JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
 <!-- Core theme JS-->
-<script th:src="@{/js/scripts.js}"
+<script th:src="@{/js/navScripts.js}"
         src="js/scripts.js"></script>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <!-- * *                               SB Forms JS                               * *-->

@@ -4,7 +4,7 @@
 * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-creative/blob/master/LICENSE)
 */
 //
-// Scripts
+// navScripts
 // 
 
 window.addEventListener('DOMContentLoaded', event => {

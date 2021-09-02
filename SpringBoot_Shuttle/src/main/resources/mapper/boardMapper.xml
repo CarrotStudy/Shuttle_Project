@@ -55,9 +55,7 @@
                 update_time = NOW(),
                 title = #{title},
                 content = #{content},
-                writer = #{writer},
-                notice_yn = 'N',
-                secret_yn = 'N',
+                writer = #{writer}
         WHERE
                 bno = #{bno}
     </update>
