@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import springboot.shuttle.constant.Method;
 import springboot.shuttle.domain.Board;
 import springboot.shuttle.service.BoardService;
+import springboot.shuttle.util.UiUtils;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ import java.util.List;
 @Controller /* 해당 어노테이션이 사용자의 요청과 응답을 기다리는 즉 UI를 담당하는 Controller 클래스임을 의미한다. */
 @RequiredArgsConstructor
 @Slf4j
-public class BoardController {
+public class BoardController extends UiUtils {
 
     @Autowired
     private BoardService boardService;
@@ -58,20 +60,20 @@ public class BoardController {
     /* 위에서 말했듯이 항상 bno가 필요하진 않으니 기본 값을 false로 해서 전달 만약 false로 지정하지 않으면 전달 값이 null 일 때 오류가 남 */
 
     @PostMapping("/board/add")
-    public String boardAdd1(final Board board) {
+    public String boardAdd1(final Board board, Model model) {
         try {
             boolean isRegistered = boardService.registerBoard(board);
             if (isRegistered == false) {
-                // TODO => 게시글 등록에 실패하였다는 메시지를 전달
+                return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list", Method.GET, null, model);
             }
         } catch (DataAccessException e) {
-            // TODO => 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
+            return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 
         } catch (Exception e) {
-            // TODO => 시스템에 문제가 발생하였다는 메시지를 전달
+            return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
         }
 
-        return "redirect:/board/list";
+        return showMessageWithRedirect("게시글 등록이 완료되었습니다.", "/board/list", Method.GET, null, model);
     }
 
     @GetMapping(value = "/board/detail")
@@ -92,25 +94,24 @@ public class BoardController {
     }
 
     @GetMapping(value = "/board/delete")
-    public String deleteBoard(@RequestParam(value = "bno", required = false) Long bno) {
+    public String deleteBoard(@RequestParam(value = "bno", required = false) Long bno, Model model) {
         if (bno == null) {
-            // TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
-            return "redirect:/board/list";
+            return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
         }
 
         try {
             boolean isDeleted = boardService.deleteBoard(bno);
             if (isDeleted == false) {
-                // TODO => 게시글 삭제에 실패하였다는 메시지를 전달
+                return showMessageWithRedirect("게시글 삭제에 실패하였습니다.", "/board/list", Method.GET, null, model);
             }
         } catch (DataAccessException e) {
-            // TODO => 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
+            return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 
         } catch (Exception e) {
-            // TODO => 시스템에 문제가 발생하였다는 메시지를 전달
+            return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
         }
 
-        return "redirect:/board/list";
+        return showMessageWithRedirect("게시글 삭제가 완료되었습니다.", "/board/list", Method.GET, null, model);
     }
 
     /* 게시글 삭제 할 때 필요한 bno 글 번호를 파라미터로 받음 */
