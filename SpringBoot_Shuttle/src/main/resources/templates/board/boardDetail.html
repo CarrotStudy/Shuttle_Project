@@ -31,10 +31,9 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="" th:href="@{/board/list}">게시판</a></li>
-                <li class="nav-item"><a class="nav-link" href="#portfolio">로그인</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">회원가입</a></li>
+                <li class="nav-item"><a class="nav-link" href="" th:href="@{/board/add( bno = ${board.bno} )}">수정하기</a></li>
+                <li class="nav-item"><a class="nav-link" href="" th:href="@{/board/delete( bno = ${board.bno} )}">삭제하기</a></li>
             </ul>
         </div>
     </div>
@@ -82,11 +81,6 @@
                     </div>
                 </form>
 
-                <div class="btn_wrap text-center">
-                    <a th:href="@{/board/list}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-                    <a th:href="@{/board/add( bno = ${board.bno} )}" class="btn btn-primary waves-effect waves-light">수정하기</a>
-                    <a th:href="@{/board/delete( bno = ${board.bno} )}" class="btn btn-danger waves-effect waves-light">삭제하기</a>
-                </div>
             </div>
             <!-- /.card-content -->
         </div>

@@ -89,23 +89,21 @@
         </div>
 
         <nav th:if="${board != null and board.paginationInfo.totalRecordCount > 0}" th:object="${board.paginationInfo}" th:with="info=${board.paginationInfo}" >
-            <ul class="pagination" style="margin-left: 592px;">
-                <!--
+            <ul class="pagination" style="margin-left: 445px;">
+
                 <div style="border: 1px">
                     <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(1)} ]])">
                         <a href="javascript:void(0)" aria-label="Previous" class="kong_a">처음</a>
                     </li>
                 </div>
                 <div style="border: 1px;">
-                    <li  th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.firstPage - 1)} ]])">
+                    <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.firstPage - 1)} ]])">
                         <a href="javascript:void(0)" aria-label="Previous" class="kong_a"><span aria-hidden="true">이전</span></a>
                     </li>
                 </div>
-                대표 - 막아놓음. -->
                 <li th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == board.currentPageNo} ? 'active'">
                     <div style="border: 1px;"><a href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(pageNo)} ]])" class="kong_a"></a>                </div>
                 </li>
-                <!--
                 <div style="border: 1px;">
                     <li  th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.lastPage + 1)} ]])">
                         <a href="javascript:void(0)" aria-label="Next" class="kong_a"><span aria-hidden="true">다음</span></a>
@@ -116,7 +114,6 @@
                         <a href="javascript:void(0)" aria-label="Next" class="kong_a"><span aria-hidden="true">끝</span></a>
                     </li>
                 </div>
-                대표 - 막아놓음 .-->
             </ul>
         </nav>
 
