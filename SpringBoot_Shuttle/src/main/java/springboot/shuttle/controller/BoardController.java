@@ -7,10 +7,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import springboot.shuttle.constant.Method;
 import springboot.shuttle.domain.Board;
+import springboot.shuttle.paging.Criteria;
 import springboot.shuttle.service.BoardService;
 import springboot.shuttle.util.UiUtils;
 
@@ -31,14 +33,16 @@ public class BoardController extends UiUtils {
     /* 메서드의 파라미터로 저장되는 Model 인터페이스는 데이터를 뷰로 전달하는데 사용 */
 
     @GetMapping("/board/list")
-    public String boardListForm(Model model) {
+    public String boardListForm(@ModelAttribute("board") Board board, Model model) {
 
-        List<Board> boardList = boardService.listBoard();
+        List<Board> boardList = boardService.listBoard(board);
         model.addAttribute("boardList", boardList);
 
         return "/board/boardList";
     }
     /* boardServcie.listBoard() 로 board list들을 가져와 boardList 변수에 저장하여 model.addAttribute로 뷰로 전달 */
+    /* @ModellAttribute를 사용하면 파라미터로 전달받은 객체를 자동으로 뷰까지 전달 할 수 있음 괄호 안에 "criteria"가 화면(view) 에서 사용 될 변수명 */
+
 
     @GetMapping("/board/add")
     public String boardAddForm(@RequestParam(value = "bno", required = false) Long bno, Model model) {
@@ -60,7 +64,7 @@ public class BoardController extends UiUtils {
     /* 위에서 말했듯이 항상 bno가 필요하진 않으니 기본 값을 false로 해서 전달 만약 false로 지정하지 않으면 전달 값이 null 일 때 오류가 남 */
 
     @PostMapping("/board/add")
-    public String boardAdd1(final Board board, Model model) {
+    public String boardAdd(final Board board, Model model) {
         try {
             boolean isRegistered = boardService.registerBoard(board);
             if (isRegistered == false) {
@@ -77,16 +81,14 @@ public class BoardController extends UiUtils {
     }
 
     @GetMapping(value = "/board/detail")
-    public String openBoardDetail(@RequestParam(value = "bno", required = false) Long bno, Model model) {
+    public String boardDetailForm(@RequestParam(value = "bno", required = false) Long bno, Model model) {
         if (bno == null) {
-            // TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
-            return "redirect:/board/list";
+            return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
         }
 
         Board board = boardService.detailBoard(bno);
         if (board == null || "Y".equals(board.getDelete_Yn())) {
-            // TODO => 없는 게시글이거나, 이미 삭제된 게시글이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
-            return "redirect:/board/list";
+            return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list", Method.GET, null, model);
         }
         model.addAttribute("board", board);
 

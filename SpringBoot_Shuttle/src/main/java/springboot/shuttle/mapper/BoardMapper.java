@@ -2,6 +2,7 @@ package springboot.shuttle.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import springboot.shuttle.domain.Board;
+import springboot.shuttle.paging.Criteria;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface BoardMapper {
 
     int deleteBoard(Long bno); /* 게시글을 삭제하는 SQL문을 호출하는 메서드, 파라미터로 게시글 번호를 줘서 번호로 구분하여 삭제 */
 
-    List<Board> listBoard(); /* 게시글 목록을 조회하는 SQL문을 호출하는 메서드, <>안에 타입을 파라미터로 갖는 형태를 제네릭 타입이라고 함, 리스트 안에 하나의 글을 조회하는 detailBoard 메서드를 여러개 호출하여 저장 한 것과 유사 */
+    List<Board> listBoard(Board board); /* 게시글 목록을 조회하는 SQL문을 호출하는 메서드, <>안에 타입을 파라미터로 갖는 형태를 제네릭 타입이라고 함, 리스트 안에 하나의 글을 조회하는 detailBoard 메서드를 여러개 호출하여 저장 한 것과 유사 */
 
-    int countBoard(); /* 개시글의 개수를 조회하는 SQL문을 호출하는 메서드, 페이징 처리 할 때 사용 */
+    int countBoard(Board board); /* 개시글의 개수를 조회하는 SQL문을 호출하는 메서드, 페이징 처리 할 때 사용 */
 }

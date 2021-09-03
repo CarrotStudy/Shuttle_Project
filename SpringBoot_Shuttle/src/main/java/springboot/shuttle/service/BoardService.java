@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springboot.shuttle.domain.Board;
 import springboot.shuttle.mapper.BoardMapper;
+import springboot.shuttle.paging.Criteria;
+import springboot.shuttle.paging.PaginationInfo;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,13 +52,19 @@ public class BoardService {
     /* bno 글번호를 파라미터로 받아오고 Board 클래스로 선언 된 board 변수에 detailBoard 쿼리를 불러와 저장 */
     /* board에 담긴 내용이 널이 아닐 시 글이 존재한다는 의미이니 삭제 쿼리 불러와 진행 성공시 queryResult에 값 1 저장 */
 
-    public List<Board> listBoard() {
+    public List<Board> listBoard(Board board) {
         List<Board> boardList = Collections.emptyList();
 
-        int boardTotalCount = boardMapper.countBoard();
+        int boardTotalCount = boardMapper.countBoard(board);
+
+
+        PaginationInfo paginationInfo = new PaginationInfo(board);
+        paginationInfo.setTotalRecordCount(boardTotalCount);
+
+        board.setPaginationInfo(paginationInfo);
 
         if (boardTotalCount > 0) {
-            boardList = boardMapper.listBoard();
+            boardList = boardMapper.listBoard(board);
         }
 
         return boardList;

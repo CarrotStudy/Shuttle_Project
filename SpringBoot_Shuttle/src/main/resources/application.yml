@@ -3,7 +3,7 @@ server :
 
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
-  type-aliases-package: springboot.shuttle.domain
+  type-aliases-package: springboot.shuttle.*
 
 spring:
   datasource:

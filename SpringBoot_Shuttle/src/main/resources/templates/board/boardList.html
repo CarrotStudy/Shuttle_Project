@@ -20,6 +20,26 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link   th:href="@{/css/styles.css}"
             href="css/styles.css" rel="stylesheet" />
+
+    <!-- 대표-스타일 css -->
+    <style>
+        .kong_a {
+            text-decoration: none;
+            margin-left: 7.5px;
+            margin-right: 7.5px;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: arial;
+            color: black;
+        }
+        .kong_a:hover {
+            text-decoration: underline;
+            color: black;
+        }
+
+
+    </style>
+
 </head>
 <body id="">
 
@@ -30,7 +50,7 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="" th:href="@{/board/add}">글작성</a></li>
                 <li class="nav-item"><a class="nav-link" href="" th:href="@{/board/list}">게시판</a></li>
                 <li class="nav-item"><a class="nav-link" href="#portfolio">로그인</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">회원가입</a></li>
@@ -52,7 +72,7 @@
                             <div class="card-body p-4" >
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5><a th:href="@{/board/detail( bno=${board.bno} )}" th:text="${board.title}"></a></h5>
+                                    <h5><a th:href="@{/board/detail( bno=${board.bno} )}" th:text="${board.title}" style="color: black; text-decoration: none;"></a></h5>
                                     <!-- Product price-->
                                     <h6>3000</h6>
                                     <h6 th:text="${board.address}"></h6>
@@ -68,30 +88,38 @@
             </div>
         </div>
 
-        <!-- 페이징, 글작성 버튼 -->
-        <nav aria-label="Page navigation" class="text-center">
-            <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
+        <nav th:if="${board != null and board.paginationInfo.totalRecordCount > 0}" th:object="${board.paginationInfo}" th:with="info=${board.paginationInfo}" >
+            <ul class="pagination" style="margin-left: 592px;">
+                <!--
+                <div style="border: 1px">
+                    <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(1)} ]])">
+                        <a href="javascript:void(0)" aria-label="Previous" class="kong_a">처음</a>
+                    </li>
+                </div>
+                <div style="border: 1px;">
+                    <li  th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.firstPage - 1)} ]])">
+                        <a href="javascript:void(0)" aria-label="Previous" class="kong_a"><span aria-hidden="true">이전</span></a>
+                    </li>
+                </div>
+                대표 - 막아놓음. -->
+                <li th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == board.currentPageNo} ? 'active'">
+                    <div style="border: 1px;"><a href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(pageNo)} ]])" class="kong_a"></a>                </div>
                 </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+                <!--
+                <div style="border: 1px;">
+                    <li  th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.lastPage + 1)} ]])">
+                        <a href="javascript:void(0)" aria-label="Next" class="kong_a"><span aria-hidden="true">다음</span></a>
+                    </li>
+                </div>
+                <div style="border: 1px;">
+                    <li  th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.totalPageCount)} ]])">
+                        <a href="javascript:void(0)" aria-label="Next" class="kong_a"><span aria-hidden="true">끝</span></a>
+                    </li>
+                </div>
+                대표 - 막아놓음 .-->
             </ul>
         </nav>
 
-        <div class="btn_wrap text-right">
-            <a th:href="@{/board/add}" class="btn btn-primary waves-effect waves-light">Write</a>
-        </div>
 
         <!-- 페이징, 글작성 버튼 끝 -->
     </section>
@@ -108,12 +136,27 @@
 <!-- SimpleLightbox plugin JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
 <!-- Core theme JS-->
+
+<!-- 대표 - 자바스크립트 추가 시작 -->
 <script th:src="@{/js/navScripts.js}"
         src="js/scripts.js"></script>
+<script th:src="@{/js/common.js}"
+        src="js/common.js"></script>
+<!-- 대표 - 자바스크립트 추가 끝 -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <!-- * *                               SB Forms JS                               * *-->
 <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    function movePage(uri, queryString) {
+        location.href = uri + queryString;
+    }
+
+    /*]]>*/
+</script>
 
 </body>
 </html>
