@@ -16,6 +16,7 @@
         , insert_time
         , update_time
         , delete_time
+        , address
     </sql>
 
 
@@ -34,6 +35,7 @@
             , NOW()
             , NULL
             , NULL
+            , #{address}
         )
     </insert>
 

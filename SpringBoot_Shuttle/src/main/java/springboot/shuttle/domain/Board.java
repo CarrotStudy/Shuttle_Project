@@ -22,6 +22,7 @@ public class Board {
     private LocalDateTime insert_Time; //등록일
     private LocalDateTime update_Time; //수정일
     private LocalDateTime delete_Time; //삭제여부
+    private String address; // 게시글 작성 주소
 
 
 }
