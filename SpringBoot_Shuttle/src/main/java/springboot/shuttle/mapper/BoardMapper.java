@@ -22,4 +22,6 @@ public interface BoardMapper {
     List<Board> listBoard(Board board); /* 게시글 목록을 조회하는 SQL문을 호출하는 메서드, <>안에 타입을 파라미터로 갖는 형태를 제네릭 타입이라고 함, 리스트 안에 하나의 글을 조회하는 detailBoard 메서드를 여러개 호출하여 저장 한 것과 유사 */
 
     int countBoard(Board board); /* 개시글의 개수를 조회하는 SQL문을 호출하는 메서드, 페이징 처리 할 때 사용 */
+
+    List<String> getAddress();
 }

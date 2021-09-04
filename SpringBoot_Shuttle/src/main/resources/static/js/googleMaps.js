@@ -1,4 +1,4 @@
-var map;
+//var map;
 
 //function initMap() {
 //  var daelim = { lat: 37.40358356615854 ,lng: 126.93035052651962 };
@@ -38,19 +38,24 @@ function initMap() {
     center: { lat: -34.397, lng: 150.644 },
   });
   const geocoder = new google.maps.Geocoder();
-
-  const address = "대한민국 대구광역시 북구 산격1동 북구대산초등학교";
-  geocoder
-    .geocode({ address: address })
-    .then(({ results }) => {
-      map.setCenter(results[0].geometry.location);
-      new google.maps.Marker({
-        map: map,
-        position: results[0].geometry.location,
-      });
+  var address = [];
+  var data = /*[[ ${address} ]]*/
+  console.log(data)
+//  address[0] = "대한민국 대구광역시 북구 산격1동 북구대산초등학교";
+//  address[1] = "대한민국 경기도 수원시 장안구 조원2동 송원로 장안구청";
+  for (var i = 0; i < address.length; i++) {
+    geocoder
+    .geocode({ address: address[i] })
+    . then(({ results }) =>{
+        map.setCenter(results[0].geometry.location);
+        new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location,
+        });
     })
     .catch((e) =>
-      alert("Geocode was not successful for the following reason: " + e)
+        alert("Geocode was not successful for the following reason: " + e)
     );
+  }
 }
 

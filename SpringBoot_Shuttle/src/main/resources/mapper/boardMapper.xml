@@ -95,4 +95,9 @@
         WHERE
                 delete_yn = 'N'
     </select>
+
+    <select id="getAddress" resultType="String">
+        SELECT address FROM board
+    </select>
+
 </mapper>
