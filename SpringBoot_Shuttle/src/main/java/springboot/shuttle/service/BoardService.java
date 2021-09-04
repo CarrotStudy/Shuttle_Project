@@ -113,4 +113,9 @@ public class BoardService {
         return imageMapper.listImage(board_bno);
     }
     /* 파일 (이미지)의 개수를 조회하고 파일 개수가 1개 이상이면 board_bno에 해당하는 게시글에 포함된 파일 리스트를 반환 */
+
+    public List<String> getAddress(){
+        return boardMapper.getAddress();
+    }
+
 }
