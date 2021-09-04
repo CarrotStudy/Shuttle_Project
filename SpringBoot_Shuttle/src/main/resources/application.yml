@@ -11,3 +11,7 @@ spring:
     password: 12345678
     url: jdbc:mysql://shuttle.cfptkyo6yq2m.us-east-2.rds.amazonaws.com/Shuttle?useSSL=false&allowPublicKeyRetrieval=true
     username: user
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB

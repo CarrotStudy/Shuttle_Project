@@ -3,11 +3,17 @@ package springboot.shuttle.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 import springboot.shuttle.domain.Board;
+import springboot.shuttle.domain.ImageDTO;
 import springboot.shuttle.mapper.BoardMapper;
+import springboot.shuttle.mapper.ImageMapper;
 import springboot.shuttle.paging.Criteria;
 import springboot.shuttle.paging.PaginationInfo;
+import springboot.shuttle.util.FileUtils;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +23,13 @@ public class BoardService {
 
     @Autowired
     private BoardMapper boardMapper;
+
+    @Autowired
+    private ImageMapper imageMapper;
+
+    @Autowired
+    private FileUtils fileUtils;
+
 
     public boolean registerBoard(Board board) {
         int queryResult = 0;
@@ -33,6 +46,24 @@ public class BoardService {
     /* if else문은 파라미터로 받은 board의 bno 즉 글 번호가 널 값이면 글을 처음 작성한다는 의미이니 insertBoard */
     /* bno가 널 값이 아니면 이미 작성 된 글을 수정한다는 의 */
     /* insertBoard, updateBoard 둘다 리턴타입이 int이니 성공하면 1을 실패하면 0을 반환하니 1이면 true, 0이면 false */
+
+    public boolean registerBoard(Board board, MultipartFile[] files) {
+        int queryResult = 1;
+
+        if (registerBoard(board) == false) {
+            return false;
+        }
+
+        List<ImageDTO> fileList = fileUtils.uploadFiles(files, board.getBno());
+        if (CollectionUtils.isEmpty(fileList) == false) {
+            queryResult = imageMapper.insertImage(fileList);
+            if (queryResult < 1) {
+                queryResult = 0;
+            }
+        }
+
+        return (queryResult > 0);
+    }
 
     public Board detailBoard(Long bno) {
         return boardMapper.detailBoard(bno);

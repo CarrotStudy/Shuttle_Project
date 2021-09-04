@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import springboot.shuttle.constant.Method;
 import springboot.shuttle.domain.Board;
 import springboot.shuttle.paging.Criteria;
@@ -64,9 +65,9 @@ public class BoardController extends UiUtils {
     /* 위에서 말했듯이 항상 bno가 필요하진 않으니 기본 값을 false로 해서 전달 만약 false로 지정하지 않으면 전달 값이 null 일 때 오류가 남 */
 
     @PostMapping("/board/add")
-    public String boardAdd(final Board board, Model model) {
+    public String boardAdd(final Board board, final MultipartFile[] files, Model model) {
         try {
-            boolean isRegistered = boardService.registerBoard(board);
+            boolean isRegistered = boardService.registerBoard(board, files);
             if (isRegistered == false) {
                 return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list", Method.GET, null, model);
             }

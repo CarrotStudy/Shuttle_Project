@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="springboot.shuttle.mapper.ImageMapper"> <!-- namespace는 xml mapper의 sql쿼리문과 mapper 인터페이스의 메서드를 매핑시키는 역-->
+
+    <sql id = "imageColumns">
+        ino
+        , board_bno
+        , original_name
+        , save_name
+        , size
+        , delete_yn
+        , insert_time
+        , delete_time
+    </sql>
+
+    <insert id="insertImage" parameterType="list">
+        INSERT INTO image (
+            <include refid="imageColumns" />
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.ino}
+            , #{item.board_bno}
+            , #{item.original_name}
+            , #{item.save_name}
+            , #{item.size}
+            , 'N'
+            , NOW()
+            , NULL
+            )
+        </foreach>
+    </insert>
+
+    <select id="detailImage" parameterType="long" resultType="ImageDTO">
+        SELECT
+            <include refid="imageColumns" />
+        FROM
+            image
+        WHERE
+            delete_yn = 'N'
+            AND
+            ino = #{ino}
+    </select>
+
+    <update id="deleteImage" parameterType="long">
+        UPDATE image
+        SET
+            delete_yn = 'Y'
+            , delete_time = NOW()
+        WHERE
+            board_bno = #{board_bno}
+    </update>
+
+    <select id="listImage" parameterType="long" resultType="ImageDTO">
+        SELECT
+            <include refid="imageColumns" />
+        FROM
+            image
+        WHERE
+            delete_yn = 'N'
+            AND
+            board_bno = #{board_bno}
+    </select>
+
+    <select id="countImage" parameterType="long" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            image
+        WHERE
+            delete_yn = 'N'
+            AND
+            board_bno = #{board_bno}
+    </select>
+
+</mapper>
