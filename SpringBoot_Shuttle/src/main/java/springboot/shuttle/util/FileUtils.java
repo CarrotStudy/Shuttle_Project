@@ -22,17 +22,15 @@ public class FileUtils {
     private final String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
 
     /* 업로드 경로 ex) /Users/kongdaepyo/Desktop/upload/날짜 가 만들어짐 */
-<<<<<<< HEAD
     private final String uploadPath = Paths.get("C:", "CarrotStudy", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
-=======
 
     /* 25번째 이정환 경로 **/
     //private final String uploadPath = Paths.get("C:", "suttle", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
     /* 27번째 공대표 경로 **/
     //private final String uploadPath = Paths.get("/Users", "kongdaepyo", "Shuttle_Project", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
+    /* 31번째 안정희 경로 **/
+    //private final String uploadPath = Paths.get("C:", "CarrotStudy", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
 
-
->>>>>>> ae5c4b07cbdd2daead982c978aab96e4ade4080e
     /* 서버에 생성할 파일명을 처리할 랜덤 문자열 반환 @return 랜덤 문자열 */
     private final String getRandomString() {
         return UUID.randomUUID().toString().replaceAll("-", "");
