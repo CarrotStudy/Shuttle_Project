@@ -22,7 +22,7 @@ public class FileUtils {
     private final String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
 
     /* 업로드 경로 ex) /Users/kongdaepyo/Desktop/upload/날짜 가 만들어짐 */
-    private final String uploadPath = Paths.get("/Users", "kongdaepyo", "Shuttle_Project", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
+    private final String uploadPath = Paths.get("C:", "suttle", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
     /* 서버에 생성할 파일명을 처리할 랜덤 문자열 반환 @return 랜덤 문자열 */
     private final String getRandomString() {
         return UUID.randomUUID().toString().replaceAll("-", "");
