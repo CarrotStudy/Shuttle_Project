@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import springboot.shuttle.constant.Method;
 import springboot.shuttle.domain.Board;
+import springboot.shuttle.domain.ImageDTO;
 import springboot.shuttle.paging.Criteria;
 import springboot.shuttle.service.BoardService;
 import springboot.shuttle.util.UiUtils;
@@ -34,10 +35,13 @@ public class BoardController extends UiUtils {
     /* 메서드의 파라미터로 저장되는 Model 인터페이스는 데이터를 뷰로 전달하는데 사용 */
 
     @GetMapping("/board/list")
-    public String boardListForm(@ModelAttribute("board") Board board, Model model) {
+    public String boardListForm(@ModelAttribute("board") Board board, @RequestParam(value = "bno", required = false) Long bno, Model model) {
 
         List<Board> boardList = boardService.listBoard(board);
         model.addAttribute("boardList", boardList);
+
+        List<ImageDTO> fileList = boardService.getImageFileList(bno);
+        model.addAttribute("fileList", fileList); /* 97~98 getImageFileList를 Model에 담아 뷰로 전달 */
 
         return "/board/boardList";
     }
@@ -92,6 +96,9 @@ public class BoardController extends UiUtils {
             return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list", Method.GET, null, model);
         }
         model.addAttribute("board", board);
+
+        List<ImageDTO> fileList = boardService.getImageFileList(bno);
+        model.addAttribute("fileList", fileList); /* 97~98 getImageFileList를 Model에 담아 뷰로 전달 */
 
         return "board/boardDetail";
     }

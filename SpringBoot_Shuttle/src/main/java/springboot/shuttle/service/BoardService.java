@@ -104,4 +104,13 @@ public class BoardService {
     /* NPE (널포익) 을 방지하기 위 Collections 클래스의 emptyList메서드를 이용하여 비어있는 리스트 선언 */
     /* boardTotalCount는 countBoard를 통하여 삭제되지 않은 게시글을 카운팅 하여 저장 */
 
+    public List<ImageDTO> getImageFileList(Long board_bno) {
+
+        int fileTotalCount = imageMapper.countImage(board_bno);
+        if (fileTotalCount < 1) {
+            return Collections.emptyList();
+        }
+        return imageMapper.listImage(board_bno);
+    }
+    /* 파일 (이미지)의 개수를 조회하고 파일 개수가 1개 이상이면 board_bno에 해당하는 게시글에 포함된 파일 리스트를 반환 */
 }
