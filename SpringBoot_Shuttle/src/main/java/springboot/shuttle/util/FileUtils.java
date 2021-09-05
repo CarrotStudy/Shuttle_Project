@@ -30,6 +30,8 @@ public class FileUtils {
     //private final String uploadPath = Paths.get("/Users", "kongdaepyo", "Shuttle_Project", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
     /* 31번째 안정희 경로 **/
     //private final String uploadPath = Paths.get("C:", "CarrotStudy", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
+    /* 33번째 서재홍 경로 **/
+    //private final String uploadPath = Paths.get("C:", "projects", "Shuttle", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
 
     /* 서버에 생성할 파일명을 처리할 랜덤 문자열 반환 @return 랜덤 문자열 */
     private final String getRandomString() {
