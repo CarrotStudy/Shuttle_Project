@@ -18,6 +18,7 @@ import springboot.shuttle.paging.Criteria;
 import springboot.shuttle.service.BoardService;
 import springboot.shuttle.util.UiUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /* GET은 데이터의 조회를 의미, POST는 데이터의 생성을 의미*/
@@ -35,14 +36,17 @@ public class BoardController extends UiUtils {
     /* 메서드의 파라미터로 저장되는 Model 인터페이스는 데이터를 뷰로 전달하는데 사용 */
 
     @GetMapping("/board/list")
-    public String boardListForm(@ModelAttribute("board") Board board, @RequestParam(value = "bno", required = false) Long bno, Model model) {
+    public String boardListForm(@ModelAttribute("board") Board board, Model model) {
 
         List<Board> boardList = boardService.listBoard(board);
         model.addAttribute("boardList", boardList);
 
-        List<ImageDTO> fileList = boardService.getImageFileList(bno);
-        model.addAttribute("fileList", fileList); /* 97~98 getImageFileList를 Model에 담아 뷰로 전달 */
 
+        ArrayList<String> fileName = new ArrayList<>();
+        for (int i=0; i<boardList.size(); i++){
+            fileName.add(boardService.getImageFileList(boardList.get(i).getBno()).get(0).getSave_name());
+        }
+        model.addAttribute("fileName", fileName); /* 97~98 getImageFileList를 Model에 담아 뷰로 전달 */
         return "/board/boardList";
     }
     /* boardServcie.listBoard() 로 board list들을 가져와 boardList 변수에 저장하여 model.addAttribute로 뷰로 전달 */
