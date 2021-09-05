@@ -10,7 +10,8 @@
     <link rel="icon" type="image/x-icon"
           th:href="@{assets/favicon.ico}"
           href="assets/favicon.ico" />
-    <!-- Bootstrap Icons-->
+
+<!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
@@ -20,6 +21,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link   th:href="@{/css/bootstrapStyle.css}"
             href="css/styles.css" rel="stylesheet" />
+
 </head>
 <body id="">
 <!-- Navigation-->
@@ -38,9 +40,65 @@
     </div>
 </nav>
 
+<!-- 여기 추가 -->
+<div class = "container">
+    <div>
+        <h2>회원가입</h2>
+    </div>
+<form action="" th:action th:object ="${member}" method="post">
+    <!-- object 는 Member 의 member -->
+    <div>
+        <label for="loginId">아이디</label>
+        <input placeholder="아이디" onfocus="this.placeholder=''" onblur="this.placeholder='아이디'"
+               type="text" id="loginId" th:field="*{loginId}">
+        <!-- onfocus="this.placeholder=''" : 포커스 됐을 때 힌트 비활성화 -->
+        <!-- onblur="this.placeholder=''" : 입력값 없이 포커스 나갔을 때 힌트 활성화-->
+    </div>
+    <div>
+        <label for="password">비밀번호</label>
+        <input placeholder="비밀번호" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호'"
+               type="password" id="password" th:field="*{password}">
+    </div>
+    <div>
+        <label for="name">이름</label>
+        <input placeholder="이름" onfocus="this.placeholder=''" onblur="this.placeholder='이름'"
+           type="text" id="name" th:field="*{name}">
+    </div>
+    <div>
+        <label for="email">이메일</label>
+        <input placeholder="이메일" onfocus="this.placeholder=''" onblur="this.placeholder='이메일'"
+           type="text" id="email" th:field="*{email}">
+    </div>
+    <div>
+        <label>우편번호</label>
+        <input placeholder="우편번호" type="text" id="postcode" th:field="*{postcode}">
+    </div>
+    <div>
+        <label>주소</label>
+        <input placeholder="주소" type="text" id="address" th:field="*{address}">
+    </div>
+    <div>
+        <label>상세주소</label>
+        <input placeholder="상세주소" type="text" id="detailAddress" th:field="*{detailAddress}">
+    </div>
+    <div>
+        <label>전화번호</label>
+        <input placeholder="전화번호" type="text" id="tel" th:field="*{tel}">
+    </div>
+        <input type="hidden" th:value=0 th:field="*{point}">
+        <input type="hidden" th:value=0 th:field="*{role}">
+    <div>
+    </div>
+    <div>
+        <button class="join_button" type="submit">회원가입</button>
+    </div>
+</form>
+<!-- 여기까지 폼 -->
+
 <!-- Footer-->
 <footer class="bg-light py-5">
-    <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2021 - Company Name</div></div>
+    <div class="container px-4
+     px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2021 - Company Name</div></div>
 </footer>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>

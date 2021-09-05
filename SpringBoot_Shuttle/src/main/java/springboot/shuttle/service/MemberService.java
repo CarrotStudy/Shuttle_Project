@@ -24,7 +24,7 @@ public class MemberService {
 
     public Optional<Member> findByLoginId(String loginId) {
         return memberMapper.findAll().stream().filter(m -> m.getLoginId().equals(loginId)).findAny();
-    } /** DP_ stream=for **/
+    }
 
     public Member login(String loginId, String password) {
         return memberMapper.findByLoginId(loginId).filter(m -> m.getPassword().equals(password)).orElse(null);
