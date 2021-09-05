@@ -23,25 +23,30 @@
 
     <!-- 대표-스타일 css -->
     <style>
+    @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+    @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+    @import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+
         .kong_a {
             text-decoration: none;
             margin-left: 7.5px;
             margin-right: 7.5px;
             font-size: 20px;
-            font-weight: bold;
             font-family: arial;
-            color: black;
+            color: #212121;
+            font-family: 'Jeju Gothic', sans-serif;
         }
         .kong_a:hover {
             text-decoration: underline;
             color: black;
+            font-family: 'Jeju Gothic', sans-serif;
         }
 
 
     </style>
 
 </head>
-<body id="">
+<body style="background-color: #F5F5F5;">
 
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
@@ -61,23 +66,25 @@
 
 <!-- 실제 게시글 출력 -->
     <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
+        <div class="container px-4 px-lg-5 mt-5" style="border: 1px solid; border-color: #E2E2E2; background-color: #FFFFFF; border-radius: 7px;">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <div th:each="board : ${boardList}">
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image--><!--th:src="|/images/${product.productImage.getStoreImageName()}|"-->
-                            <!-- 임시 <img class="card-img-top" th:onclick="|location.href='@{|/product/${product.productId}|}'|" th:src="|/images/${product.productImage.getStoreImageName()}|" width="250px" height="250px" /> -->
-                            <!-- Product details-->
-                            <div class="card-body p-4" >
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5><a th:href="@{/board/detail( bno=${board.bno} )}" th:text="${board.title}" style="color: black; text-decoration: none;"></a></h5>
-                                    <!-- Product price-->
-                                    <h6>3000</h6>
-                                    <h6 th:text="${board.address}"></h6>
-                                </div>
+                <div th:each="board, bStatus : ${boardList}">
+                    <div class="col mb-5" style="border: 0px;">
+                        <div class="card h-100" style="margin-top: 35px; border: 0px;">
+                            <!-- 사진 -->
+                            <div th:if="${not #lists.isEmpty( fileName )}" class="form-group">
+                                <a th:each="file, fStatus : ${fileName}">
+                                    <i class="fa fa-file-o" aria-hidden="true"></i>
+                                    <img th:if="${bStatus.index} == ${fStatus.index}" th:src="|/image/${file}|" style="width: 270px; height: 250px; border-radius: 7px;"/>
+                                </a>
                             </div>
+                            <!-- 글 제목-->
+<!--                        <p><a th:href="@{/board/detail( bno=${board.bno} )}" th:text="${board.title}" style="color: black; text-decoration: none; margin-top: 3px;"></a></p>-->
+                            <h5 th:text="${board.title}" style="margin-top:10px; font-family: 'Jeju Gothic', sans-serif; "></h5>
+                            <!-- 주소 -->
+                            <h6 th:text="${board.address}" style="color: #C0C0C0; font-family: 'Jeju Myeongjo', serif;"></h6>
+                            <!-- 가격 -->
+                            <h6 style="font-family: 'Jeju Gothic', sans-serif;">3000</h6>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/board/detail( bno=${board.bno} )}">상세보기</a></div>
@@ -86,36 +93,39 @@
                     </div>
                 </div>
             </div>
+
+            <nav th:if="${board != null and board.paginationInfo.totalRecordCount > 0}" th:object="${board.paginationInfo}" th:with="info=${board.paginationInfo}" >
+                <ul class="pagination" style="margin-left: 515px;">
+
+                    <div style="border: 1px">
+                        <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(1)} ]])">
+                            <a href="javascript:void(0)" aria-label="Previous" class="kong_a">처음</a>
+                        </li>
+                    </div>
+                    <div style="border: 1px;">
+                        <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.firstPage - 1)} ]])">
+                            <a href="javascript:void(0)" aria-label="Previous" class="kong_a"><span aria-hidden="true">이전</span></a>
+                        </li>
+                    </div>
+                    <li th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == board.currentPageNo} ? 'active'">
+                        <div style="border: 1px;"><a href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(pageNo)} ]])" class="kong_a"></a>                </div>
+                    </li>
+                    <div style="border: 1px;">
+                        <li  th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.lastPage + 1)} ]])">
+                            <a href="javascript:void(0)" aria-label="Next" class="kong_a"><span aria-hidden="true">다음</span></a>
+                        </li>
+                    </div>
+                    <div style="border: 1px;">
+                        <li  th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.totalPageCount)} ]])">
+                            <a href="javascript:void(0)" aria-label="Next" class="kong_a"><span aria-hidden="true">끝</span></a>
+                        </li>
+                    </div>
+                </ul>
+            </nav>
+
         </div>
 
-        <nav th:if="${board != null and board.paginationInfo.totalRecordCount > 0}" th:object="${board.paginationInfo}" th:with="info=${board.paginationInfo}" >
-            <ul class="pagination" style="margin-left: 445px;">
 
-                <div style="border: 1px">
-                    <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(1)} ]])">
-                        <a href="javascript:void(0)" aria-label="Previous" class="kong_a">처음</a>
-                    </li>
-                </div>
-                <div style="border: 1px;">
-                    <li th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.firstPage - 1)} ]])">
-                        <a href="javascript:void(0)" aria-label="Previous" class="kong_a"><span aria-hidden="true">이전</span></a>
-                    </li>
-                </div>
-                <li th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == board.currentPageNo} ? 'active'">
-                    <div style="border: 1px;"><a href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(pageNo)} ]])" class="kong_a"></a>                </div>
-                </li>
-                <div style="border: 1px;">
-                    <li  th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.lastPage + 1)} ]])">
-                        <a href="javascript:void(0)" aria-label="Next" class="kong_a"><span aria-hidden="true">다음</span></a>
-                    </li>
-                </div>
-                <div style="border: 1px;">
-                    <li  th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${board.makeQueryString(info.totalPageCount)} ]])">
-                        <a href="javascript:void(0)" aria-label="Next" class="kong_a"><span aria-hidden="true">끝</span></a>
-                    </li>
-                </div>
-            </ul>
-        </nav>
 
 
         <!-- 페이징, 글작성 버튼 끝 -->
