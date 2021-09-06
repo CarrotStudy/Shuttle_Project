@@ -63,4 +63,8 @@
 
     <!-- 회원가입 로그인 끝-->
 
+    <update id="chargePoint" parameterType="Member">
+        UPDATE member SET point = #{point} WHERE loginId = #{loginId}
+    </update>
+
 </mapper>

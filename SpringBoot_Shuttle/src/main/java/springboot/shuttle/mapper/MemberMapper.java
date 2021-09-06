@@ -2,6 +2,7 @@ package springboot.shuttle.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 import springboot.shuttle.domain.Member;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public interface MemberMapper {
     List<Member> findAll();
     Optional<Member> findByLoginId(String loginId);
     Member login(String id, String password);
+    void chargePoint(Member member);
 
 }

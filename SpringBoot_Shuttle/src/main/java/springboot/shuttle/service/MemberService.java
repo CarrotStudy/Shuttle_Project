@@ -30,5 +30,10 @@ public class MemberService {
         return memberMapper.findByLoginId(loginId).filter(m -> m.getPassword().equals(password)).orElse(null);
     }
 
+    public void chargePoint(int point, String loginId){
+        Member member = memberMapper.findByLoginId(loginId).orElseThrow();
+        member.setPoint(point);
+        memberMapper.chargePoint(member);
+    }
 
 }
