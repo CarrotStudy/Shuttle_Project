@@ -11,11 +11,10 @@ import java.util.Optional;
 @Mapper //매핑파일에 기재된 SQL을 호출하기 위한 인터페이스
 public interface MemberMapper {
 
-    void memberSave(Member member);
 
+    void memberSave(Member member);
     List<Member> findAll();
     Optional<Member> findByLoginId(String loginId);
     Member login(String id, String password);
-    int idCheck(String loginId);
 
 }
