@@ -32,7 +32,7 @@ public class MemberService {
 
     public void chargePoint(int point, String loginId){
         Member member = memberMapper.findByLoginId(loginId).orElseThrow();
-        member.setPoint(point);
+        member.setPoint(member.getPoint() + point);
         memberMapper.chargePoint(member);
     }
 
