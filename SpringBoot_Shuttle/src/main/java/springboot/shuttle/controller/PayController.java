@@ -1,22 +1,32 @@
 package springboot.shuttle.controller;
 
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+@Slf4j
 @Controller
 public class PayController {
 
-    @GetMapping("/pay")
-    public String kakaPay(){
-        return "pay/pay";
+    @GetMapping("/choice")
+    public String choice(){
+        return "pay/choice";
+    }
+
+    @PostMapping("/pay")
+    public String kakaoPay(@RequestParam String choice, Model model){
+        model.addAttribute("price",choice);
+        return "pay/kakaopay";
+
     }
 
     @GetMapping("/pay2")
     public String inicisPay(){
-        return "pay/pay2";
+        return "pay/inicispay";
     }
 
 }

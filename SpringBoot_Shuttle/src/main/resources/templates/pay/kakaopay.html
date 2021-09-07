@@ -14,7 +14,7 @@ IMP.init('imp84907545'); //iamport 대신 자신의 "가맹점 식별코드"를 
 IMP.request_pay({
 	merchant_uid : 'merchant_' + new Date().getTime(),
 	name : '노르웨이 회전 의자',
-	amount : 1004,
+	amount : [[ ${price} ]],
 	buyer_email : "gildong@gmail.com",
 	buyer_name : "홍길동",
 	buyer_tel : '010-1234-5678',

@@ -31,10 +31,8 @@ public class PayAPIController {
 
     @PostMapping("/api/payments/complete")
     public ResponseDTO<Integer> kakaopay(@RequestBody String point, HttpServletRequest request){
-        log.info("point={}",point);
         HttpSession session = request.getSession();
         Member user = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        log.info("user={}",user);
         memberService.chargePoint(Integer.parseInt(point),user.getLoginId());
         return new ResponseDTO<>(HttpStatus.OK.value(),1);
     }

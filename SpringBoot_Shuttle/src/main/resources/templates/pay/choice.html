@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+
+<div class="container">
+
+    <form th:action="@{/pay}" method="post">
+        <div class="form-control">
+            <label>카테고리</label>
+            <select th:name="choice">
+                <option value="선택">선택</option>
+                <option value="5000">5,000</option>
+                <option value="10000">10,000</option>
+                <option value="20000">20,000</option>
+                <option value="50000">50,000</option>
+                <option value="100000">100,000</option>
+            </select>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <button type="submit">결제</button>
+            </div>
+            <div class="col">
+                <button th:onclick="|location.href='@{/}'|"
+                        type="button">취소</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>
