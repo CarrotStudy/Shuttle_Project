@@ -24,8 +24,10 @@ public class PayController {
 
     }
 
-    @GetMapping("/pay2")
-    public String inicisPay(){
+    @PostMapping("/pay2")
+    public String inicisPay(@RequestParam String choice, Model model){
+        log.info("choice={}",choice);
+        model.addAttribute("price",choice);
         return "pay/inicispay";
     }
 
