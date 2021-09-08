@@ -28,23 +28,20 @@
         <a class="navbar-brand" href="#">Start Bootstrap</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <!-- 로그인 안했을 시 네비게이션바 -->
-        <div class="collapse navbar-collapse" id="navbarResponsive" th:if="${session.loginMember == null}">
-            <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                <li class="nav-item" ><a class="nav-link" href="#about">About</a></li>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <!-- 로그인 안 했을 때 -->
+            <ul class="navbar-nav ms-auto my-2 my-lg-0" th:if="${session.loginMember == null}">
                 <li class="nav-item" ><a class="nav-link" href="" th:href="@{/board/list}">게시판</a></li>
                 <li class="nav-item" ><a class="nav-link" href="" th:href="@{/login}">로그인</a></li>
                 <li class="nav-item" ><a class="nav-link" href="" th:href="@{/signUp}">회원가입</a></li>
-                <li class="nav-item" ><a class="nav-link" href="" th:href="@{/choice}">포인트 충전</a></li>
             </ul>
-        </div>
-        <!-- 로그인 했을 시 네비게이션바 -->
-        <div class="collapse navbar-collapse" id="navbarResponsive" th:if="${session.loginMember != null}">
-            <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                <li class="nav-item" ><a class="nav-link" href="#about">About</a></li>
+            <!-- 로그인 했을 때 -->
+            <ul class="navbar-nav ms-auto my-2 my-lg-0" th:unless="${session.loginMember == null}">
                 <li class="nav-item" ><a class="nav-link" href="" th:href="@{/board/list}">게시판</a></li>
                 <li class="nav-item" ><a class="nav-link" href="" th:href="@{/login}">마이페이지</a></li>
                 <li class="nav-item" ><a class="nav-link" href="" th:href="@{/signUp}">채팅</a></li>
                 <li class="nav-item" ><a class="nav-link" href="" th:href="@{/choice}">포인트 충전</a></li>
+                <li class="nav-item" ><a class="nav-link" href="" th:href="@{/logout}">로그아웃</a></li>
             </ul>
         </div>
     </div>
