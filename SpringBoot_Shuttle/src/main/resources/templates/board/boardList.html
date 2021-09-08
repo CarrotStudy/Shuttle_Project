@@ -41,6 +41,10 @@
             color: black;
             font-family: 'Jeju Gothic', sans-serif;
         }
+        .pd {
+            text-decoration: none;
+            border-color: black;
+        }
 
 
     </style>
@@ -70,21 +74,17 @@
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <div th:each="board, bStatus : ${boardList}">
                     <div class="col mb-5" style="border: 0px;">
-                        <div class="card h-100" style="margin-top: 35px; border: 0px;">
-                            <!-- 사진 -->
-
-                            <!-- 글 제목-->
-<!--                        <p><a th:href="@{/board/detail( bno=${board.bno} )}" th:text="${board.title}" style="color: black; text-decoration: none; margin-top: 3px;"></a></p>-->
-                            <h5 th:text="${board.title}" style="margin-top:10px; font-family: 'Jeju Gothic', sans-serif; "></h5>
-                            <!-- 주소 -->
-                            <h6 th:text="${board.address}" style="color: #C0C0C0; font-family: 'Jeju Myeongjo', serif;"></h6>
-                            <!-- 가격 -->
-                            <h6 th:text="${board.price}" style="color: #C0C0C0; font-family: 'Jeju Myeongjo', serif;"></h6>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/board/detail( bno=${board.bno} )}">상세보기</a></div>
+                        <a class="pd" th:href="@{/board/detail( bno=${board.bno} )}">
+                            <div class="card h-100" style="margin-top: 35px;">
+                                <!-- 사진 -->
+                                <!-- 글 제목-->
+                                <h5 th:text="${board.title}" style="margin-top:10px; font-family: 'Jeju Gothic', sans-serif; color: black;"></h5>
+                                <!-- 주소 -->
+                                <h6 th:text="${board.address}" style="color: #C0C0C0; font-family: 'Jeju Myeongjo', serif;"></h6>
+                                <!-- 가격 -->
+                                <h6 th:text="${#numbers.formatInteger(board.price, 0, 'COMMA')}" style="color: black; font-weight: bold; font-family: 'Jeju Myeongjo', serif;"></h6>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
