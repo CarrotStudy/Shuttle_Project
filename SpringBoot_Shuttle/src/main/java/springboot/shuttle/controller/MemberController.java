@@ -58,11 +58,12 @@ public class MemberController {
 
 
         //세션 : 일정 시간동안 같은 사용자(정확하게 브라우저)로 부터 들어오는 일련의 요구를 하나의 상태로 보고 그 상태를 일정하게 유지시키는 기술
-        //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
-        HttpSession session = httpServletRequest.getSession(true);
-        //세션에 로그인 회원 정보 보관
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
+        HttpSession session = httpServletRequest.getSession(true);
+        //(true) : 세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
+
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        //세션에 로그인 회원 정보 보관
 
         return "redirect:" + redirectURL;
     }
@@ -81,6 +82,18 @@ public class MemberController {
         String encodedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encodedPassword); //암호화된 패스워드로 저장
         memberService.memberSave(member);
+        return "redirect:/";
+    }
+
+    //로그아웃
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        log.info("실행");
+        HttpSession session = request.getSession(false);
+        // (false) : session이 존재하면 현재 session 반환, 존재하지 않으면 null 반환
+        if (session != null) {
+            session.invalidate(); //로그인 되어있는 세션 완전히 삭제
+        }
         return "redirect:/";
     }
 
