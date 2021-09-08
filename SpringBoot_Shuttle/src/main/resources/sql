@@ -8,6 +8,7 @@ CREATE TABLE board (
     update_time DATETIME NULL COMMENT '수정일',
     delete_yn ENUM('Y', 'N') NOT NULL DEFAULT 'N' COMMENT '삭제 여부',
     address VARCHAR(50) NOT NULL COMMENT '게시글 주소',
+    board INT NOT NULL COMMENT '가격'
     PRIMARY KEY (bno)
 )  COMMENT '게시판';
 

@@ -17,6 +17,7 @@
         , update_time
         , delete_time
         , address
+        , price
     </sql>
 
 
@@ -36,6 +37,7 @@
             , NULL
             , NULL
             , #{address}
+            , #{price}
         )
     </insert>
 
@@ -57,7 +59,8 @@
                 update_time = NOW(),
                 title = #{title},
                 content = #{content},
-                writer = #{writer}
+                writer = #{writer},
+                price = #{price}
         WHERE
                 bno = #{bno}
     </update>
