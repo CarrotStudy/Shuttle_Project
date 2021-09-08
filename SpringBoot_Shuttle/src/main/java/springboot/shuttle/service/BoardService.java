@@ -7,12 +7,16 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 import springboot.shuttle.domain.Board;
 import springboot.shuttle.domain.ImageDTO;
+import springboot.shuttle.domain.Member;
 import springboot.shuttle.mapper.BoardMapper;
 import springboot.shuttle.mapper.ImageMapper;
 import springboot.shuttle.paging.Criteria;
 import springboot.shuttle.paging.PaginationInfo;
 import springboot.shuttle.util.FileUtils;
+import springboot.shuttle.web.SessionConst;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +35,13 @@ public class BoardService {
     private FileUtils fileUtils;
 
 
-    public boolean registerBoard(Board board) {
+    public boolean registerBoard(Board board, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER); // 현재 로그인 된 아이디의 정보가 들어있는 session값을 넣어줌
+
+        board.setWriter(loginMember.getName());
+        board.setAddress(loginMember.getAddress());
+
         int queryResult = 0;
 
         if (board.getBno() == null) {
@@ -47,10 +57,10 @@ public class BoardService {
     /* bno가 널 값이 아니면 이미 작성 된 글을 수정한다는 의 */
     /* insertBoard, updateBoard 둘다 리턴타입이 int이니 성공하면 1을 실패하면 0을 반환하니 1이면 true, 0이면 false */
 
-    public boolean registerBoard(Board board, MultipartFile[] files) {
+    public boolean registerBoard(Board board, MultipartFile[] files, HttpServletRequest request) {
         int queryResult = 1;
 
-        if (registerBoard(board) == false) {
+        if (registerBoard(board, request) == false) {
             return false;
         }
 

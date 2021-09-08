@@ -18,6 +18,7 @@ import springboot.shuttle.paging.Criteria;
 import springboot.shuttle.service.BoardService;
 import springboot.shuttle.util.UiUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,11 +43,6 @@ public class BoardController extends UiUtils {
         model.addAttribute("boardList", boardList);
 
 
-        ArrayList<String> fileName = new ArrayList<>();
-        for (int i=0; i<boardList.size(); i++){
-            fileName.add(boardService.getImageFileList(boardList.get(i).getBno()).get(0).getSave_name());
-        }
-        model.addAttribute("fileName", fileName); /* 97~98 getImageFileList를 Model에 담아 뷰로 전달 */
         return "/board/boardList";
     }
     /* boardServcie.listBoard() 로 board list들을 가져와 boardList 변수에 저장하여 model.addAttribute로 뷰로 전달 */
@@ -73,9 +69,10 @@ public class BoardController extends UiUtils {
     /* 위에서 말했듯이 항상 bno가 필요하진 않으니 기본 값을 false로 해서 전달 만약 false로 지정하지 않으면 전달 값이 null 일 때 오류가 남 */
 
     @PostMapping("/board/add")
-    public String boardAdd(final Board board, final MultipartFile[] files, Model model) {
+    public String boardAdd(final Board board, final MultipartFile[] files, HttpServletRequest request, Model model) {
+
         try {
-            boolean isRegistered = boardService.registerBoard(board, files);
+            boolean isRegistered = boardService.registerBoard(board, files, request);
             if (isRegistered == false) {
                 return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list", Method.GET, null, model);
             }

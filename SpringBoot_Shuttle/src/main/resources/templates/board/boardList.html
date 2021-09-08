@@ -72,12 +72,7 @@
                     <div class="col mb-5" style="border: 0px;">
                         <div class="card h-100" style="margin-top: 35px; border: 0px;">
                             <!-- 사진 -->
-                            <div th:if="${not #lists.isEmpty( fileName )}" class="form-group">
-                                <a th:each="file, fStatus : ${fileName}">
-                                    <i class="fa fa-file-o" aria-hidden="true"></i>
-                                    <img th:if="${bStatus.index} == ${fStatus.index}" th:src="|/image/${file}|" style="width: 270px; height: 250px; border-radius: 7px;"/>
-                                </a>
-                            </div>
+
                             <!-- 글 제목-->
 <!--                        <p><a th:href="@{/board/detail( bno=${board.bno} )}" th:text="${board.title}" style="color: black; text-decoration: none; margin-top: 3px;"></a></p>-->
                             <h5 th:text="${board.title}" style="margin-top:10px; font-family: 'Jeju Gothic', sans-serif; "></h5>
