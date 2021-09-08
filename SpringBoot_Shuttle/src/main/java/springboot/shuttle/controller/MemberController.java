@@ -3,6 +3,7 @@ package springboot.shuttle.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,17 +27,9 @@ public class MemberController {
     @Autowired //의존성 주입
     MemberService memberService;
 
-    //회원가입
-    @GetMapping("/signUp")
-    public String signUpForm(@ModelAttribute Member member){
-        return "members/signUpForm";
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder; //비밀번호 암호화
 
-    @PostMapping("/signUp")
-    public String memberSave(@ModelAttribute Member member) {
-        memberService.memberSave(member);
-        return "redirect:/";
-    }
 
     //로그인
     @GetMapping("/login")
@@ -48,8 +41,14 @@ public class MemberController {
     public String login(@ModelAttribute LoginForm loginform, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest httpServletRequest) {
 
+        if (bindingResult.hasErrors()) { //form에 입력한 값에 대한 검증을 해서 에러가 발생하는 지 체크
+            return "members/loginForm";
+        }
         Optional<Member> byLoginId = memberService.findByLoginId(loginform.getLoginId());
 
+        if(passwordEncoder.matches(loginform.getPassword(), byLoginId.get().getPassword())) {
+            log.info("비밀번호일치");
+        }
 
         Member loginMember = memberService.login(loginform.getLoginId(), loginform.getPassword());
         if (loginMember == null) {
@@ -67,4 +66,23 @@ public class MemberController {
 
         return "redirect:" + redirectURL;
     }
+
+    //회원가입
+    @GetMapping("/signUp")
+    public String signUpForm(@ModelAttribute Member member){
+        return "members/signUpForm";
+    }
+
+    @PostMapping("/signUp")
+    public String memberSave(@ModelAttribute Member member, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "members/signUpForm";
+        }
+        String encodedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encodedPassword); //암호화된 패스워드로 저장
+        memberService.memberSave(member);
+        return "redirect:/";
+    }
+
+
 }
