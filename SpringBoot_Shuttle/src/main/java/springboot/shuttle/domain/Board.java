@@ -25,6 +25,7 @@ public class Board extends CommonDTO{
     /* CommonDTO에서 작성되고 상속받아 제거 됨 */
 
     private String address; // 게시글 작성 주소
+    private Long price; // 가격
 
 
 }
