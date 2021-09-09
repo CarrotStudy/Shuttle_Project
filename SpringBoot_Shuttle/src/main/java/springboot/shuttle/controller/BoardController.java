@@ -42,6 +42,9 @@ public class BoardController extends UiUtils {
         List<Board> boardList = boardService.listBoard(board);
         model.addAttribute("boardList", boardList);
 
+        for (int i = 0; i < boardList.size(); i++) {
+            log.info("" + i + "글" + boardList.get(i).getBno());
+        }
 
         return "/board/boardList";
     }
@@ -88,6 +91,7 @@ public class BoardController extends UiUtils {
 
     @GetMapping(value = "/board/detail")
     public String boardDetailForm(@RequestParam(value = "bno", required = false) Long bno, Model model) {
+
         if (bno == null) {
             return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
         }
@@ -99,6 +103,7 @@ public class BoardController extends UiUtils {
         model.addAttribute("board", board);
 
         List<ImageDTO> fileList = boardService.getImageFileList(bno);
+
         model.addAttribute("fileList", fileList); /* 97~98 getImageFileList를 Model에 담아 뷰로 전달 */
 
         return "board/boardDetail";

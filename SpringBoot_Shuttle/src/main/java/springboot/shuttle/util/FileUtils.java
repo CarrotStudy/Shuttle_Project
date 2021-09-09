@@ -22,12 +22,12 @@ public class FileUtils {
     private final String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
 
     /* 업로드 경로 ex) /Users/kongdaepyo/Desktop/upload/날짜 가 만들어짐 */
-    private final String uploadPath = Paths.get("C:", "CarrotStudy", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
+    //private final String uploadPath = Paths.get("C:", "CarrotStudy", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
 
     /* 25번째 이정환 경로 **/
     //private final String uploadPath = Paths.get("C:", "suttle", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
     /* 27번째 공대표 경로 **/
-    //private final String uploadPath = Paths.get("/Users", "kongdaepyo", "Shuttle_Project", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
+    private final String uploadPath = Paths.get("/Users", "kongdaepyo", "Shuttle_Project", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
     /* 31번째 안정희 경로 **/
     //private final String uploadPath = Paths.get("C:", "CarrotStudy", "SpringBoot_Shuttle", "src", "main", "resources", "static", "image").toString();
     /* 33번째 서재홍 경로 **/
