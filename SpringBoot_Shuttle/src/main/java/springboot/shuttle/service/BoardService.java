@@ -65,6 +65,8 @@ public class BoardService {
         }
 
         List<ImageDTO> fileList = fileUtils.uploadFiles(files, board.getBno());
+        board.setSave_name(fileList.get(0).getSave_name());
+        boardMapper.insertImage(board);
         if (CollectionUtils.isEmpty(fileList) == false) {
             queryResult = imageMapper.insertImage(fileList);
             if (queryResult < 1) {

@@ -41,11 +41,6 @@ public class BoardController extends UiUtils {
 
         List<Board> boardList = boardService.listBoard(board);
         model.addAttribute("boardList", boardList);
-
-        for (int i = 0; i < boardList.size(); i++) {
-            log.info("" + i + "글" + boardList.get(i).getBno());
-        }
-
         return "/board/boardList";
     }
     /* boardServcie.listBoard() 로 board list들을 가져와 boardList 변수에 저장하여 model.addAttribute로 뷰로 전달 */

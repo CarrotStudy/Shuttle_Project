@@ -26,6 +26,6 @@ public class Board extends CommonDTO{
 
     private String address; // 게시글 작성 주소
     private Long price; // 가격
-
+    private String save_name; // 썸네일
 
 }

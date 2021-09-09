@@ -18,6 +18,7 @@
         , delete_time
         , address
         , price
+        , save_name
     </sql>
 
 
@@ -38,6 +39,7 @@
             , NULL
             , #{address}
             , #{price}
+            , ""
         )
     </insert>
 
@@ -63,6 +65,14 @@
                 price = #{price}
         WHERE
                 bno = #{bno}
+    </update>
+
+    <update id="insertImage" parameterType="Board">
+        UPDATE board
+        SET
+            save_name = #{save_name}
+        WHERE
+            bno = #{bno}
     </update>
 
     <update id="deleteBoard" parameterType="long">
@@ -102,5 +112,7 @@
     <select id="getAddress" resultType="String">
         SELECT address FROM board
     </select>
+
+
 
 </mapper>

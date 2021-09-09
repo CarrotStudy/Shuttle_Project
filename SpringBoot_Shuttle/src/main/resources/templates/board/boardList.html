@@ -86,6 +86,7 @@
                         <a class="pd" th:href="@{/board/detail( bno=${board.bno} )}">
                             <div class="card h-100" style="margin-top: 35px;">
                                 <!-- 사진 -->
+                                <img th:src="|/image/${board.save_name}|"/>
                                 <!-- 글 제목-->
                                 <h5 th:text="${board.title}" style="margin-top:10px; font-family: 'Jeju Gothic', sans-serif; color: black;"></h5>
                                 <!-- 주소 -->

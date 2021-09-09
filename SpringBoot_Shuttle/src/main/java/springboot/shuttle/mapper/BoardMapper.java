@@ -15,6 +15,8 @@ public interface BoardMapper {
 
     Board detailBoard(Long bno); /* 하나의 게시글을 조회하는 즉 상세보기 SQL문을 호출하는 메서드, 리턴타입으로 Board 클래스이며 매핑 됨, 파라미터로 게시글 번호를 받아 글을 찾아 조회 */
 
+    int insertImage(Board board); /* 사진 썸네일 */
+
     int updateBoard(Board board); /* 게시글을 수정하는 SQL문을 호출하는 메서드, board 변수에 게시글의 정보가 담김 */
 
     int deleteBoard(Long bno); /* 게시글을 삭제하는 SQL문을 호출하는 메서드, 파라미터로 게시글 번호를 줘서 번호로 구분하여 삭제 */
