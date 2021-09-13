@@ -24,5 +24,7 @@ public interface BoardMapper {
 
     int countBoard(Board board); /* 개시글의 개수를 조회하는 SQL문을 호출하는 메서드, 페이징 처리 할 때 사용 */
 
-    List<String> getAddress();
+    List<String> getAddress(); /* 주소 가져오기 */
+
+    boolean cntPlus(Long bno); /* 조회수 */
 }

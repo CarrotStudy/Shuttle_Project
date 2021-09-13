@@ -159,13 +159,16 @@
                         <a class="pd" th:href="|@{/board/detail}${board.makeQueryString(board.currentPageNo)}&bno=${board.bno}|">
                             <div class="card h-100" style="margin-top: 35px;">
                                 <!-- 사진 -->
-                                <img th:src="|/image/${board.save_name}|" style="width: 268px; height: 270px;"/>
+                                <img    th:if="${board.save_name != ''}"
+                                        th:src="|/image/${board.save_name}|" style="width: 268px; height: 270px;"/>
                                 <!-- 글 제목-->
                                 <h5 th:text="${board.title}" style="margin-top:10px; font-family: 'Jeju Gothic', sans-serif; color: black;"></h5>
                                 <!-- 주소 -->
                                 <h6 th:text="${board.address}" style="color: #C0C0C0; font-family: 'Jeju Myeongjo', serif;"></h6>
                                 <!-- 가격 -->
-                                <h6 th:text="${#numbers.formatInteger(board.price, 0, 'COMMA')}" style="color: black; font-weight: bold; font-family: 'Jeju Myeongjo', serif;"></h6>
+                                <h6 th:text="${#numbers.formatInteger(board.price, 0, 'COMMA')}" style="color: black; font-weight: bold; font-family: 'Jeju Myeongjo', serif; display: inline-block;"></h6>
+                                <!-- 조회수 -->
+                                <span th:text="|조회 ${board.view_cnt}|" style="color: #C0C0C0; font-size: 13px; font-family: 'Jeju Myeongjo', serif;"></span>
                             </div>
                         </a>
                     </div>

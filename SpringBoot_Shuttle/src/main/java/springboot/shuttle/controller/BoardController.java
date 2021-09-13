@@ -95,6 +95,8 @@ public class BoardController extends UiUtils {
         }
         model.addAttribute("board", board);
 
+        boardService.cntPlus(bno);
+
         List<ImageDTO> fileList = boardService.getImageFileList(bno);
 
         model.addAttribute("fileList", fileList); /* 97~98 getImageFileList를 Model에 담아 뷰로 전달 */

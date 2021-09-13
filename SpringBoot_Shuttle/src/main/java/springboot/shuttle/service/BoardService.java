@@ -126,6 +126,11 @@ public class BoardService {
 
     public List<String> getAddress(){
         return boardMapper.getAddress();
-    }
+    } /* 주소 가져오기 */
+
+
+    public boolean cntPlus(Long bno){
+        return boardMapper.cntPlus(bno);
+    } /* 조회수 */
 
 }
