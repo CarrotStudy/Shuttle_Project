@@ -10,14 +10,12 @@ import springboot.shuttle.domain.ImageDTO;
 import springboot.shuttle.domain.Member;
 import springboot.shuttle.mapper.BoardMapper;
 import springboot.shuttle.mapper.ImageMapper;
-import springboot.shuttle.paging.Criteria;
-import springboot.shuttle.paging.PaginationInfo;
+import springboot.shuttle.controller.paging.PaginationInfo;
 import springboot.shuttle.util.FileUtils;
 import springboot.shuttle.web.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 

@@ -14,12 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 import springboot.shuttle.constant.Method;
 import springboot.shuttle.domain.Board;
 import springboot.shuttle.domain.ImageDTO;
-import springboot.shuttle.paging.Criteria;
 import springboot.shuttle.service.BoardService;
 import springboot.shuttle.util.UiUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /* GET은 데이터의 조회를 의미, POST는 데이터의 생성을 의미*/

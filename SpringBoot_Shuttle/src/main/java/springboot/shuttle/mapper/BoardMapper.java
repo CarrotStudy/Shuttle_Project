@@ -2,7 +2,6 @@ package springboot.shuttle.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import springboot.shuttle.domain.Board;
-import springboot.shuttle.paging.Criteria;
 
 import java.util.List;
 

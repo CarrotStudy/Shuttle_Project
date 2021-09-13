@@ -2,8 +2,8 @@ package springboot.shuttle.domain;
 /* Paging DTO */
 
 import lombok.Data;
-import springboot.shuttle.paging.Criteria;
-import springboot.shuttle.paging.PaginationInfo;
+import springboot.shuttle.controller.paging.Criteria;
+import springboot.shuttle.controller.paging.PaginationInfo;
 
 import java.time.LocalDateTime;
 
