@@ -1,0 +1,195 @@
+<!--//채팅방-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello WebSocket</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/chat.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/chat.js"></script>
+</head>
+<body>
+<div id="main-content" class="container">
+    <div>
+        <ul class="nav nav-pills">
+            <li role="presentation" class="active"><a href="/">Home</a></li>
+            <li role="presentation"><a href="/chat/chatroom">채팅방 목록</a></li>
+            <li role="presentation"><a href="/">결제</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="connect">WebSocket connection:</label>
+                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="name">What is your name?</label>
+                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                </div>
+                <button id="send" class="btn btn-default" type="submit">Send</button>
+            </form>
+        </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Greetings</th>
+                </tr>
+                </thead>
+                <tbody id="greetings">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<!--<script th:inline="javascript">-->
+<!--var stompClient = null;-->
+
+<!--function setConnected(connected) {-->
+<!--    $("#connect").prop("disabled", connected);-->
+<!--    $("#disconnect").prop("disabled", !connected);-->
+<!--    if (connected) {-->
+<!--        $("#conversation").show();-->
+<!--    }-->
+<!--    else {-->
+<!--        $("#conversation").hide();-->
+<!--    }-->
+<!--    $("#greetings").html("");-->
+<!--}-->
+
+<!--function connect() {-->
+<!--    var socket = new SockJS('/stomp-endpoint');-->
+<!--    stompClient = Stomp.over(socket);-->
+<!--    stompClient.connect({}, function (frame) {-->
+<!--        setConnected(true);-->
+<!--        console.log('Connected: ' + frame);-->
+<!--        stompClient.subscribe('/topic/greetings', function (greeting) {-->
+<!--            showGreeting(JSON.parse(greeting.body));-->
+<!--        });-->
+<!--    });-->
+<!--}-->
+
+<!--function disconnect() {-->
+<!--    if (stompClient !== null) {-->
+<!--        stompClient.disconnect();-->
+<!--    }-->
+<!--    setConnected(false);-->
+<!--    console.log("Disconnected");-->
+<!--}-->
+
+<!--function sendName() {-->
+<!--    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));-->
+<!--}-->
+
+<!--function showGreeting(message) {-->
+<!--    $("#greetings").append("<tr><td>" + message.message + "</td></tr>");-->
+<!--}-->
+
+<!--$(function () {-->
+<!--    $("form").on('submit', function (e) {-->
+<!--        e.preventDefault();-->
+<!--    });-->
+<!--    $( "#connect" ).click(function() { connect(); });-->
+<!--    $( "#disconnect" ).click(function() { disconnect(); });-->
+<!--    $( "#send" ).click(function() { sendName(); });-->
+<!--});-->
+<!--</script>-->
+<!--<script th:inline="javascript">-->
+<!--    $(document).ready(function(){-->
+<!--        const username = "나야나";-->
+
+<!--        $("#disconn").on("click", (e) => {-->
+<!--            disconnect();-->
+<!--        });-->
+
+<!--        $("#button-send").on("click", (e) => {-->
+<!--            send();-->
+<!--        });-->
+
+<!--        var websocket = new WebSocket("ws://localhost:830/ws/chat");-->
+<!--        console.log("연결");-->
+<!--        websocket.onmessage = onMessage;-->
+<!--        websocket.onopen = onOpen;-->
+<!--        websocket.onclose = onClose;-->
+
+<!--        function send(){-->
+<!--            let msg = document.getElementById("msg");-->
+
+<!--            console.log(username + ":" + msg.value);-->
+<!--            websocket.send(username + ":" + msg.value);-->
+<!--            msg.value = '';-->
+<!--        }-->
+
+<!--          function onClose(evt){-->
+<!--          var str = username + ":님이 방을 나가셨습니다.";-->
+<!--          websocket.send(str);-->
+
+<!--        }-->
+
+<!--        function onOpen(evt){-->
+<!--          var str = username + ":님이 방을 입장하셨습니다.";-->
+<!--          websocket.send(str);-->
+
+<!--        }-->
+
+<!--        function onMessage(msg){-->
+<!--            var data = msg.data;-->
+<!--            var sessionId = null;-->
+<!--            var message = null;-->
+<!--            var arr = data.split(":");-->
+
+<!--            for(var i = 0; i<arr.length; i++){-->
+<!--                console.log('arr[' + i + ']:' + arr[i]);-->
+<!--            }-->
+
+<!--           var cur_session = username;-->
+
+<!--           console.log("cur_session :" +cur_session);-->
+<!--           sessionId = arr[0];-->
+<!--           message = arr[1];-->
+
+<!--           console.log("sessionID :" +sessionId);-->
+<!--           console.log("cur_session :"+cur_session);-->
+
+<!--           if(sessionId == cur_session){-->
+<!--            var str = "<div class='col-6'>";-->
+<!--            str += "<div class='alert alert-secondary'>";-->
+<!--            str += "<b>" +sessionId +":"+message+"</b>";-->
+<!--            str += "</div></div>";-->
+<!--            $("#msgArea").append(str);-->
+
+<!--           }else{-->
+<!--            var str = "<div class='col-6'>";-->
+<!--            str += "<div class='alert alert-warning'>";-->
+<!--            str += "<b>" +sessionId +":"+message+"</b>";-->
+<!--            str += "</div></div>";-->
+<!--            $("#msgArea").append(str);-->
+<!--           }-->
+
+<!--        }-->
+<!--    })-->
+<!--</script>-->
+</html>

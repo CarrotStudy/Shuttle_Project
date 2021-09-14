@@ -5,9 +5,11 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import springboot.shuttle.Repository.ChatService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 //아직 진행중
 @Controller
@@ -16,7 +18,7 @@ import springboot.shuttle.Repository.ChatService;
 @Log4j2
 public class RoomController {
     private final ChatService service;
-//
+
 //    //채팅 리스트화면
 //    @GetMapping("/room")
 //    public String rooms(Model model){
@@ -52,23 +54,25 @@ public class RoomController {
 //    }
 //
 //
-
-
+//
+//
 //
 //
 //    ==========================================
 
     //모든 채팅방 목록 반환
-    @GetMapping(value = "/rooms")
+    @GetMapping("/chatroom")
     @ResponseBody
-    public ModelAndView rooms(){
-
+    public String rooms(Model model){
+//        Map<String, Object> list = new HashMap<>();
         log.info("# All Chat Rooms");
-        ModelAndView mv = new ModelAndView("/chat/rooms"); //chat/rooms로 데이터 날리기
+//        list.put("list",service.findAllRooms());
+        model.addAttribute("list",service.findAllRooms());
+//        ModelAndView mv = new ModelAndView("/chatroom"); //chat/rooms로 데이터 날리기
+//
+//        mv.addObject("list",service.findAllRooms());
 
-        mv.addObject("list",service.findAllRooms());
-
-        return mv;
+        return "chat/chatroom";
     }
 
     //addFlashAttribute()
@@ -78,7 +82,7 @@ public class RoomController {
     public String create(@RequestParam String name, RedirectAttributes rttr){
         log.info("# create chat room, name : "+name);
         rttr.addFlashAttribute("roomName",service.createChatRoomDTO(name));
-        return "redirect:/chat/rooms";
+        return "redirect:/chat/chatroom";
     }
 
     @GetMapping("/room")
