@@ -1,7 +1,7 @@
 <!--전체방-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
@@ -9,34 +9,40 @@
 <body>
     <div class="container">
         <div>
+            <h2 th:text="${member.name}">사용자 이름</h2>
+        </div>
+        <div>
             <ul th:each="room : ${list}">
-                <li><a th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.name]]</a></li>
+                <li><a th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.name}]]</a></li>
             </ul>
         </div>
     </div>
     <form th:action="@{/chat/room}" method="post">
-        <input type="text" name="name" class="form-control">
-        <button class="btn btn-secondary" id="btn-create">개설하기</button>
+        <input type="text" name="name" class="form-control" placeholder="개설할 방 이름 작성">
+        <button class="btn btn-secondary" id="btn-create" type="submit">개설하기</button>
     </form>
 </body>
 <!--"$(session.userId)"-->
 <script th:inline="javascript">
     $(document).ready(function(){
         console.log(1);
-        car roomName = [[${roomName}]];
-
-        console.log($(session.loginId)
-        $(".btn-create").on("click",function(e){
-        e.preventDefault();
-        console.log(1);
-
-        var name = $("input[name[name='name']").val();
-
-        if(name == ""){
-        }else{
-            $("form).submit();
+        var roomName = [[${roomName}]];
+        console.log(roomName);
+        if(roomName != null){
+            alert("방이 이미 개설 되었습니다");
         }
-    });
+
+        $(".btn-create").on("click",function(e){
+            e.preventDefault();
+
+            var name = $("input[name='name']").val();
+
+            if(name == ""){
+                alert("please write the name");
+            }else{
+                $("form").submit();
+            }
+        });
     });
 </script>
 </html>

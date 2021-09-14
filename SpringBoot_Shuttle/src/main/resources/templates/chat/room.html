@@ -11,185 +11,68 @@
     <script src="/chat.js"></script>
 </head>
 <body>
-<div id="main-content" class="container">
+<div class="container">
+    <div class="col-6">
+        <h1>[[${room.name}]]</h1>
+    </div>
     <div>
-        <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="/">Home</a></li>
-            <li role="presentation"><a href="/chat/chatroom">채팅방 목록</a></li>
-            <li role="presentation"><a href="/">결제</a></li>
-        </ul>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="connect">WebSocket connection:</label>
-                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                    </button>
+        <div id="msgArea" class="col"></div>
+        <div class="col-6">
+            <div class="input-group mb-3">
+                <input type="text" id="msg" class="form-control">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
                 </div>
-            </form>
-        </div>
-    </div>
-
-
-        <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search">
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
-                </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
-            </form>
-        </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Greetings</th>
-                </tr>
-                </thead>
-                <tbody id="greetings">
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </body>
-<!--<script th:inline="javascript">-->
-<!--var stompClient = null;-->
+<script th:inline="javascript">
+$(document).ready(function(){
 
-<!--function setConnected(connected) {-->
-<!--    $("#connect").prop("disabled", connected);-->
-<!--    $("#disconnect").prop("disabled", !connected);-->
-<!--    if (connected) {-->
-<!--        $("#conversation").show();-->
-<!--    }-->
-<!--    else {-->
-<!--        $("#conversation").hide();-->
-<!--    }-->
-<!--    $("#greetings").html("");-->
-<!--}-->
+    var roomName = [[${room.name}]];
+    var roomId = [[${room.roomId}]];
+    var username = [[${member.name}]];
 
-<!--function connect() {-->
-<!--    var socket = new SockJS('/stomp-endpoint');-->
-<!--    stompClient = Stomp.over(socket);-->
-<!--    stompClient.connect({}, function (frame) {-->
-<!--        setConnected(true);-->
-<!--        console.log('Connected: ' + frame);-->
-<!--        stompClient.subscribe('/topic/greetings', function (greeting) {-->
-<!--            showGreeting(JSON.parse(greeting.body));-->
-<!--        });-->
-<!--    });-->
-<!--}-->
+    console.log(roomName + ", " + roomId + ", " + username);
 
-<!--function disconnect() {-->
-<!--    if (stompClient !== null) {-->
-<!--        stompClient.disconnect();-->
-<!--    }-->
-<!--    setConnected(false);-->
-<!--    console.log("Disconnected");-->
-<!--}-->
+    var sockJs = new SockJS("/stomp/chat");
 
-<!--function sendName() {-->
-<!--    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));-->
-<!--}-->
+    var stomp = Stomp.over(sockJs);
 
-<!--function showGreeting(message) {-->
-<!--    $("#greetings").append("<tr><td>" + message.message + "</td></tr>");-->
-<!--}-->
+    stomp.connect({}, function(){
+        console.log("STOMP Connection");
+        stomp.subscribe("/sub/chat/room/" + roomId, function(chat){
+            var content = JSON.parse(chat.body);
+            var writer = content.writer;
+            var str = "";
 
-<!--$(function () {-->
-<!--    $("form").on('submit', function (e) {-->
-<!--        e.preventDefault();-->
-<!--    });-->
-<!--    $( "#connect" ).click(function() { connect(); });-->
-<!--    $( "#disconnect" ).click(function() { disconnect(); });-->
-<!--    $( "#send" ).click(function() { sendName(); });-->
-<!--});-->
-<!--</script>-->
-<!--<script th:inline="javascript">-->
-<!--    $(document).ready(function(){-->
-<!--        const username = "나야나";-->
-
-<!--        $("#disconn").on("click", (e) => {-->
-<!--            disconnect();-->
-<!--        });-->
-
-<!--        $("#button-send").on("click", (e) => {-->
-<!--            send();-->
-<!--        });-->
-
-<!--        var websocket = new WebSocket("ws://localhost:830/ws/chat");-->
-<!--        console.log("연결");-->
-<!--        websocket.onmessage = onMessage;-->
-<!--        websocket.onopen = onOpen;-->
-<!--        websocket.onclose = onClose;-->
-
-<!--        function send(){-->
-<!--            let msg = document.getElementById("msg");-->
-
-<!--            console.log(username + ":" + msg.value);-->
-<!--            websocket.send(username + ":" + msg.value);-->
-<!--            msg.value = '';-->
-<!--        }-->
-
-<!--          function onClose(evt){-->
-<!--          var str = username + ":님이 방을 나가셨습니다.";-->
-<!--          websocket.send(str);-->
-
-<!--        }-->
-
-<!--        function onOpen(evt){-->
-<!--          var str = username + ":님이 방을 입장하셨습니다.";-->
-<!--          websocket.send(str);-->
-
-<!--        }-->
-
-<!--        function onMessage(msg){-->
-<!--            var data = msg.data;-->
-<!--            var sessionId = null;-->
-<!--            var message = null;-->
-<!--            var arr = data.split(":");-->
-
-<!--            for(var i = 0; i<arr.length; i++){-->
-<!--                console.log('arr[' + i + ']:' + arr[i]);-->
-<!--            }-->
-
-<!--           var cur_session = username;-->
-
-<!--           console.log("cur_session :" +cur_session);-->
-<!--           sessionId = arr[0];-->
-<!--           message = arr[1];-->
-
-<!--           console.log("sessionID :" +sessionId);-->
-<!--           console.log("cur_session :"+cur_session);-->
-
-<!--           if(sessionId == cur_session){-->
-<!--            var str = "<div class='col-6'>";-->
-<!--            str += "<div class='alert alert-secondary'>";-->
-<!--            str += "<b>" +sessionId +":"+message+"</b>";-->
-<!--            str += "</div></div>";-->
-<!--            $("#msgArea").append(str);-->
-
-<!--           }else{-->
-<!--            var str = "<div class='col-6'>";-->
-<!--            str += "<div class='alert alert-warning'>";-->
-<!--            str += "<b>" +sessionId +":"+message+"</b>";-->
-<!--            str += "</div></div>";-->
-<!--            $("#msgArea").append(str);-->
-<!--           }-->
-
-<!--        }-->
-<!--    })-->
-<!--</script>-->
+            if(writer == username){
+                var str = "<div class='col-6'>";
+                str += "<div class = 'alert alert-secondary'>";
+                str += "<b>" + writer + " : " + content.toString() + "</b>";
+                str += "<div></div>";
+                $('#msgArea').append(str);
+            }else{
+                var str = "<div class='col-6'>";
+                str += "<div class = 'alert alert-warning'>";
+                str += "<b>" + writer + " : " + content.toString() + "</b>";
+                str += "<div></div>";
+                $('#msgArea').append(str);
+            }
+            $(".msgArea").append(str);
+        });
+        stomp.send("/pub/chat/enter", {}, JSON.stringify({roomId:roomId, writer:username}));
+    });
+    $("#button-send").on("click",function(e){
+        var msg = document.getElementById("msg");
+        console.log(username + ":" + msg.value);
+        stomp.send("/pub/chat/message",{},JSON.stringify({roomId:roomId,message: msg.value, writer:username}));
+        msg.value = "";
+    });
+});
+</script>
 </html>
