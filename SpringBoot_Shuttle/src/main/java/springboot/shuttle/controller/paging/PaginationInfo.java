@@ -1,4 +1,4 @@
-package springboot.shuttle.paging;
+package springboot.shuttle.controller.paging;
 
 import lombok.Data;
 

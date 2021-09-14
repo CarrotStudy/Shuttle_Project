@@ -49,6 +49,48 @@
 
     </style>
 
+    <style>
+    .dropdown.dropdown-lg .dropdown-menu {
+        margin-top: -1px;
+        padding: 6px 20px;
+    }
+    .input-group-btn .btn-group {
+        display: flex !important;
+    }
+    .btn-group .btn {
+        border-radius: 0;
+        margin-left: -1px;
+    }
+    .btn-group .btn:last-child {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+    .btn-group .form-horizontal .btn[type="submit"] {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+    .form-horizontal .form-group {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .form-group .form-control:last-child {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+    @media screen and (min-width: 768px) {
+        #adv-search {
+            width: 500px;
+            margin: 0 auto;
+        }
+        .dropdown.dropdown-lg {
+            position: static !important;
+        }
+        .dropdown.dropdown-lg .dropdown-menu {
+            min-width: 500px;
+        }
+    }
+    </style>
 </head>
 <body style="background-color: #F5F5F5;">
 
@@ -56,7 +98,38 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="#">Start Bootstrap</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+        <div id="adv-search" class="input-group">
+            <input type="text" id="mainSearchKeyword" class="form-control" th:value="${board.searchKeyword}" placeholder="키워드를 입력해 주세요." />
+            <div class="input-group-btn">
+                <div class="btn-group" role="group">
+                    <div class="dropdown dropdown-lg">
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                            <!--/* 검색 form */-->
+                            <form id="searchForm" th:action="@{/board/list}" method="get" th:onsubmit="return searchBoard(this)" class="form-horizontal" role="form">
+                                <!-- /* 현재 페이지 번호, 페이지당 출력할 데이터 개수, 페이지 하단에 출력할 페이지 개수 Hidden 파라미터 */ -->
+                                <input type="hidden" name="currentPageNo" value="1" />
+                                <input type="hidden" name="recordsPerPage" th:value="${board.recordsPerPage}" />
+                                <input type="hidden" name="pageSize" th:value="${board.pageSize}" />
+                                <div class="form-group">
+                                    <label>검색 유형</label>
+                                    <select name="searchType" class="form-control">
+                                        <option value="" th:selected="${#strings.isEmpty( board.searchType )}">전체</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>키워드</label>
+                                    <input type="text" name="searchKeyword" class="form-control" th:value="${board.searchKeyword}" />
+                                </div>
+                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                    <button type="button" onclick="searchBoard(null)"><span class="glyphicon glyphicon-search" aria-hidden="true">검색</span></button>
+                </div>
+            </div>
+        </div>
+
         <!-- 로그인 안했을 시 네비게이션바 -->
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <!-- 로그인 안 했을 때 -->
@@ -83,16 +156,19 @@
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <div th:each="board, bStatus : ${boardList}">
                     <div class="col mb-5" style="border: 0px;">
-                        <a class="pd" th:href="@{/board/detail( bno=${board.bno} )}">
+                        <a class="pd" th:href="|@{/board/detail}${board.makeQueryString(board.currentPageNo)}&bno=${board.bno}|">
                             <div class="card h-100" style="margin-top: 35px;">
                                 <!-- 사진 -->
-                                <img th:src="|/image/${board.save_name}|"/>
+                                <img    th:if="${board.save_name != ''}"
+                                        th:src="|/image/${board.save_name}|" style="width: 268px; height: 270px;"/>
                                 <!-- 글 제목-->
                                 <h5 th:text="${board.title}" style="margin-top:10px; font-family: 'Jeju Gothic', sans-serif; color: black;"></h5>
                                 <!-- 주소 -->
                                 <h6 th:text="${board.address}" style="color: #C0C0C0; font-family: 'Jeju Myeongjo', serif;"></h6>
                                 <!-- 가격 -->
-                                <h6 th:text="${#numbers.formatInteger(board.price, 0, 'COMMA')}" style="color: black; font-weight: bold; font-family: 'Jeju Myeongjo', serif;"></h6>
+                                <h6 th:text="${#numbers.formatInteger(board.price, 0, 'COMMA')}" style="color: black; font-weight: bold; font-family: 'Jeju Myeongjo', serif; display: inline-block;"></h6>
+                                <!-- 조회수 -->
+                                <span th:text="|조회 ${board.view_cnt}|" style="color: #C0C0C0; font-size: 13px; font-family: 'Jeju Myeongjo', serif;"></span>
                             </div>
                         </a>
                     </div>
@@ -129,10 +205,6 @@
             </nav>
 
         </div>
-
-
-
-
         <!-- 페이징, 글작성 버튼 끝 -->
     </section>
 <!-- 실제 게시글 출력 끝 -->
@@ -168,7 +240,25 @@
         location.href = uri + queryString;
     }
 
-    /*]]>*/
+    function searchBoard(form) {
+    /*[- 드롭다운이 아닌 메인 검색 키워드로 검색했을 때 -]*/
+    if (isEmpty(form) == true) {
+        var searchKeyword = document.getElementById("mainSearchKeyword");
+        if (isEmpty(searchKeyword.value) == true) {
+            alert("키워드를 입력해 주세요.");
+            searchKeyword.focus();
+            return false;
+        }
+
+        form = document.getElementById("searchForm");
+        form.searchKeyword.value = searchKeyword.value;
+        form.submit();
+    }
+}
+
+/*[- end of function -]*/
+
+/*]]>*/
 </script>
 <!-- 작성 한 스크립트 문 -->
 </body>

@@ -15,7 +15,7 @@ public class Board extends CommonDTO{
     private String title; //글제목
     private String content; //글내용
     private String writer; //작성자
-    private int view_Cnt; //조회수
+    private int view_cnt; //조회수
     private String notice_Yn; //공지여부
     private String secret_Yn; //비밀여부
 //    private String delete_Yn; //삭제여부

@@ -16,7 +16,6 @@ public class MapController {
     @Autowired
     private BoardService boardService;
 
-    // 테스트
     @GetMapping("/map")
     public String googleMap(Model model){
         List<String> address = boardService.getAddress();
@@ -28,12 +27,6 @@ public class MapController {
     @GetMapping("/map2")
     public String googleMap2(){
         return "map/map2";
-    }
-
-    // 우리가 하려고 하는 것
-    @GetMapping("/map3")
-    public String googleMap3(){
-        return "map/map3";
     }
 
 }
