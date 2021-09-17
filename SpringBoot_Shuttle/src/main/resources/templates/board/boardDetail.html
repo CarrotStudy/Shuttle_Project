@@ -97,10 +97,9 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="form-group" style="margin-top : 2rem;" >
-                        <button type="button" class="btn btn-primary" onclick="location.href='/chat/room'">채팅방 입장</button>
-                    </div>
+                </form>
+                <form th:action="@{/chat/room}" class="form-group" style="margin-top : 2rem;" th:if="${session.loginMember != null}" method="post">
+                    <button class="btn btn-secondary" onclick="location.href='/chat/room'" type="submit">채팅방 입장</button>
                 </form>
 
             </div>
@@ -108,8 +107,17 @@
         </div>
     </div>
 </section>
-
-
+<script th:inline="javascript">
+    $("#btn btn-secondary").click(funciton(){
+        let
+    }
+    let request = $.ajax({
+        url : "/chat/room",
+        method : "POST",
+        data : { id : "board.dno" },
+        data
+    })
+</script>
 
 <!-- Footer-->
 <footer class="bg-light py-5">

@@ -86,12 +86,47 @@ public class RoomController {
     //addFlashAttribute()
     //
     //addFlashAttribute() 는 리다이렉트 직전 플래시에 저장하는 메소드다. 리다이렉트 이후에는 소멸한다.
+//    @PostMapping(value = "/room")
+//    public String create(@RequestParam String name, RedirectAttributes rttr){
+//        log.info("# create chat room, name : "+name);
+//        rttr.addFlashAttribute("roomName",service.createChatRoomDTO(name));
+//        return "redirect:/chat/chatroom";
+//    }
+
+//    /*
+//     * 중복회원을 검증하고 결과 값을 알려주는 api
+//     * */
+//    @PostMapping(value = "/api/v1/check/id/duplicate")
+//    Map<String, Object> isDuplicateId(@RequestParam("user_id") String id){
+//        Map<String, Object> map = new HashMap<>();
+//        System.out.println(id);
+//        if(employeeService.isDuplicatedId(id)){
+//            //중복이라고 반환
+//            //TODO result_cd 부분이 미정이라서 일단 실패코드 반환
+//            map.put("result_cd",5001);
+//            map.put("result_message", "중복된 아이디 입니다.");
+//        }else{
+//            //성공 반환환다.
+//            map.put("result_cd",2001);
+//            map.put("result_message", "");
+//            map.put("data", id);
+//        }
+//        return map;
+//    }
+
     @PostMapping(value = "/room")
     public String create(@RequestParam String name, RedirectAttributes rttr){
         log.info("# create chat room, name : "+name);
         rttr.addFlashAttribute("roomName",service.createChatRoomDTO(name));
-        return "redirect:/chat/chatroom";
+        return "redirect:/board/add";
     }
+
+//    @PostMapping(value = "/room")
+//    public String create(@RequestParam String name, RedirectAttributes rttr){
+//        log.info("# create chat room, name : "+name);
+//        rttr.addFlashAttribute("roomName",service.createChatRoomDTO(name));
+//        return "redirect:/board/add";
+//    }
 
     @GetMapping("/room")
     public void getRoom(@RequestParam String roomId, Model model, HttpServletRequest request){
