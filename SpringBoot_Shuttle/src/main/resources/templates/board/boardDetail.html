@@ -100,6 +100,13 @@
                     </div>
                 </form>
                 <button class="btn btn-secondary" id="enterChat" type="submit">채팅방 입장</button>
+<!--=======-->
+<!--                <form th:action="@{/chat/room}" name = "dno" class="form-group" style="margin-top : 2rem;" th:if="${session.loginMember != null}" method="post">-->
+<!--&lt;!&ndash;                    <form th:action="@{/chat/room}" class="form-group" style="margin-top : 2rem;" th:if="${session.loginMember != null}" method="post">&ndash;&gt;-->
+<!--                    <button name = "dno" class="btn btn-secondary"  type="submit">채팅방 입장</button>-->
+<!--&lt;!&ndash;                    onclick="location.href='/chat/room'"&ndash;&gt;-->
+<!--                </form>-->
+<!--&gt;>>>>>> Stashed changes-->
 
             </div>
             <!-- /.card-content -->
@@ -124,6 +131,17 @@
             }
         });
     });
+
+<!--    $("#btn btn-secondary").click(funciton(){-->
+<!--        const dno = $("board.bno").val();-->
+<!--    }-->
+<!--    let request = $.ajax({-->
+<!--        url : "/chat/room",-->
+<!--        method : "POST",-->
+<!--        data : { id : "board.dno" },-->
+<!--        data-->
+<!--    })-->
+
 </script>
 
 <!-- Footer-->

@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor //기본 생성자 생성
 public class ChatMessageDTO {
     private String roomId;
-    private String seller;
-    private String buyer;
+    private String writer;
     private String message;
     private LocalDateTime createdAt;
 }

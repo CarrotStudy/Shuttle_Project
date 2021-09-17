@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import springboot.shuttle.service.ChatService;
+import springboot.shuttle.domain.Board;
 import springboot.shuttle.domain.ChatRoomDTO;
 import springboot.shuttle.domain.Member;
 import springboot.shuttle.service.BoardService;
@@ -117,10 +118,21 @@ public class RoomController {
 //        return map;
 //    }
 
+//    public String create(@RequestParam int dno,RedirectAttributes rttr, HttpServletRequest request ){
+//        ChatRoomDTO roomDTO = new ChatRoomDTO();
+//        log.info("여기 {}",dno);
+//        Board board = new Board();
+//        String chattitle = board.getTitle();
+//        HttpSession session = request.getSession();
+////        log.info("# create chat room, name : "+name);
+//        rttr.addFlashAttribute("roomName",service.createChatRoomDTO(chattitle));
+//        return "redirect:/board/add";
+//    }
+
+
     @PostMapping(value = "/room")
     public String create(@RequestBody Long bno, RedirectAttributes rttr, HttpServletRequest request){
         log.info("bno={}",bno);
-
         String chatRoom = boardService.findByBoardName(bno);
         String seller = boardService.findByWriter(bno);
         HttpSession session = request.getSession();

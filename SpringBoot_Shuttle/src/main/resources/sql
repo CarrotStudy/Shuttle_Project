@@ -37,3 +37,11 @@ tel varchar(100) not null,
 point int(100) not null,
 primary key(loginId)
 );
+
+create table chatRoom(
+roomId varchar(50) not null,
+name varchar(20) not null,
+seller varchar(20) not null,
+buyer varchar(20) not null,
+primary key (roomId)
+);
