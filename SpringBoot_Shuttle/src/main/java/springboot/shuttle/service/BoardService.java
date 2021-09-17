@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Service /* 해당 클래스가 비지니스 로직을 담당하는 서비스 클래스임을 의미하는 어노테이션 */
 @Slf4j
@@ -133,4 +134,11 @@ public class BoardService {
         return boardMapper.cntPlus(bno);
     } /* 조회수 */
 
+    public String findByBoardName(Long bno){
+        return boardMapper.findByBoardName(bno);
+    }
+
+    public String findByWriter(Long bno){
+        return boardMapper.findByWriter(bno);
+    }
 }

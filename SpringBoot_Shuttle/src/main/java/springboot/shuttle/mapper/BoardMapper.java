@@ -27,4 +27,8 @@ public interface BoardMapper {
     List<String> getAddress(); /* 주소 가져오기 */
 
     boolean cntPlus(Long bno); /* 조회수 */
+
+    String findByBoardName(Long bno);
+
+    String findByWriter(Long bno);
 }

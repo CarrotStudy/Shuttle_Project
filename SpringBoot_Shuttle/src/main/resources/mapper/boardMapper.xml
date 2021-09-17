@@ -118,4 +118,12 @@
         UPDATE board SET view_cnt = view_cnt + 1 WHERE bno = #{bno}
     </update>
 
+    <select id="findByBoardName" parameterType="Long" resultType="String">
+        select title from board where bno=#{bno}
+    </select>
+
+    <select id="findByWriter" parameterType="Long" resultType="String">
+        select writer from board where bno=#{bno}
+    </select>
+
 </mapper>

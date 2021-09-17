@@ -21,6 +21,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link th:href="@{/css/bootstrapStyle.css}"
           href="css/bootstrapStyle.css" rel="stylesheet"/>
+    <script src="/webjars/jquery/jquery.min.js"></script>
 </head>
 <body id="">
 
@@ -98,9 +99,7 @@
                         </div>
                     </div>
                 </form>
-                <form th:action="@{/chat/room}" class="form-group" style="margin-top : 2rem;" th:if="${session.loginMember != null}" method="post">
-                    <button class="btn btn-secondary" onclick="location.href='/chat/room'" type="submit">채팅방 입장</button>
-                </form>
+                <button class="btn btn-secondary" id="enterChat" type="submit">채팅방 입장</button>
 
             </div>
             <!-- /.card-content -->
@@ -108,15 +107,23 @@
     </div>
 </section>
 <script th:inline="javascript">
-    $("#btn btn-secondary").click(funciton(){
-        let
-    }
-    let request = $.ajax({
-        url : "/chat/room",
-        method : "POST",
-        data : { id : "board.dno" },
-        data
-    })
+    $("#enterChat").click(function(){
+        let bno=/*[[${board.bno}]]*/;
+        console.log(bno);
+        $.ajax({
+            type:"POST",
+            url:"/chat/room",
+            data:JSON.stringify(bno),
+            contentType:"application/json;charset=utf-8",
+            dataType:"json",
+            success:function(){
+                console.log("채팅방 입장");
+            },
+            error:function(error){
+                console.log(error)
+            }
+        });
+    });
 </script>
 
 <!-- Footer-->
@@ -132,6 +139,7 @@
 <!-- Core theme JS-->
 <script th:src="@{/js/navScripts.js}"
         src="js/navScripts.js"></script>
+
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <!-- * *                               SB Forms JS                               * *-->
 <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
