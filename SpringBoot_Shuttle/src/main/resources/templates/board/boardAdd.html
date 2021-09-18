@@ -59,21 +59,21 @@
                     <!-- enctype을 선언하지 않으면 파일 업로드 기능 작동 x -->
                     <!--/* update의 경우 서버로 전달할 게시글 번호 (PK) */-->
                     <input type="hidden" th:if="*{bno != null and bno > 0}" th:field="*{bno}" />
-                    <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">제목</label>
+                    <div class="form-group" style="margin-left: 20%">
+                        <label for="title" class="col-sm-2 control-label">가격</label>
                         <div class="col-sm-10">
                             <input type="text" name="name" th:field="*{title}" class="form-control" placeholder="제목을 입력해 주세요." />
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" style="margin-left: 20%">
                         <label for="title" class="col-sm-2 control-label">가격</label>
                         <div class="col-sm-10">
                             <input type="text" th:field="*{price}" class="form-control" placeholder="가격" />
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" style="margin-left: 20%">
                         <label for="content" class="col-sm-2 control-label">내용</label>
                         <div class="col-sm-10">
                             <textarea th:field="*{content}" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
@@ -81,13 +81,14 @@
                     </div>
 
 
-                    <div data-name="fileDiv" class="form-group filebox bs3-primary">
+                    <div data-name="fileDiv" class="form-group filebox bs3-primary" style="margin-left: 20%">
                         <label for="file_0" class="col-sm-2 control-label">파일1</label>
                         <div class="col-sm-10">
                             <input type="text" class="upload-name" value="파일 찾기" readonly />
                             <label for="file_0" class="control-label">찾아보기</label>
                             <input type="file" name="files" id="file_0" class="upload-hidden" onchange="changeFilename(this)" />
-
+                        </div>
+                        <div>
                             <button type="button" onclick="addFile()">
                                 <i class="fa fa-plus" aria-hidden="true">파일 추가</i>
                             </button>
@@ -97,8 +98,8 @@
                         </div>
                     </div>
                     <div id="btnDiv" class="btn_wrap text-center">
-                        <a th:href="@{/board/list}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">저장하기</button>
+                        <a th:href="@{/board/list}" class="btn btn-default" style="background-color: black; color: white;">뒤로가기</a>
+                        <button type="submit" class="btn " style="background-color: black; color: white;">저장하기</button>
                     </div>
                 </form>
             </div>

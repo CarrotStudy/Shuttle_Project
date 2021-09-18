@@ -166,7 +166,7 @@
                                 <!-- 주소 -->
                                 <h6 th:text="${board.address}" style="color: #C0C0C0; font-family: 'Jeju Myeongjo', serif;"></h6>
                                 <!-- 가격 -->
-                                <h6 th:text="${#numbers.formatInteger(board.price, 0, 'COMMA')}" style="color: black; font-weight: bold; font-family: 'Jeju Myeongjo', serif; display: inline-block;"></h6>
+                                <h6 th:text="|${#numbers.formatInteger(board.price, 0, 'COMMA')}원|" style="color: black; font-weight: bold; font-family: 'Jeju Myeongjo', serif; display: inline-block;"></h6>
                                 <!-- 조회수 -->
                                 <span th:text="|조회 ${board.view_cnt}|" style="color: #C0C0C0; font-size: 13px; font-family: 'Jeju Myeongjo', serif;"></span>
                             </div>
