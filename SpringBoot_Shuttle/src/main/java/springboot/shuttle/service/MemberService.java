@@ -35,28 +35,38 @@ public class MemberService {
 
     public void updatePw(PwUpdate pwUpdate) {memberMapper.updatePw(pwUpdate);}
 
+
+    //회원정보 불러오기
     public List<Member> findAll() {
         return memberMapper.findAll();
     }
 
+
+    //아이디 가져오기
     public Optional<Member> findByLoginId(String loginId) {
         return memberMapper.findAll().stream().filter(m -> m.getLoginId().equals(loginId)).findAny();
     }
 
+    //로그인
     public Member login(String loginId, String password) {
         return memberMapper.findByLoginId(loginId).filter(m -> passwordEncoder.matches(password, m.getPassword())).orElse(null);
     } //회원가입 후 암호화된 비밀번호를 가입 시 입력했던 비밀번호를 가져와 로그인
 
+
+    //아이디 중복 체크
     public int idCheck(String loginId) {
         return memberMapper.idCheck(loginId);
     }
 
+
+    //포인트 충전
     public void chargePoint(int point, String loginId){
         Member member = memberMapper.findByLoginId(loginId).orElseThrow();
         member.setPoint(member.getPoint() + point);
         memberMapper.chargePoint(member);
     }
 
+    //인증메일 전송
     public String mailSender(String email){
 
         Random random = new Random();
@@ -64,15 +74,13 @@ public class MemberService {
 
         String setFrom = setMail;
         String toMail = email;
-        String title = "회원가입 인증 이메일 입니다.";
+        String title = "회원가입 인증 이메일 입니다."; //이메일 제목
         String content =
                 "홈페이지를 방문해주셔서 감사합니다." +
                         "<br><br>" +
                         "인증 번호는 " + mailNum + "입니다." +
                         "<br>" +
-                        "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
-        //보낼 이메일의 내용
-
+                        "해당 인증번호를 인증번호 확인란에 기입하여 주세요."; //이메일 내용
         /** 이메일 전송을 위한 코드 **/
         try {
             MimeMessage message = sender.createMimeMessage();
@@ -86,6 +94,6 @@ public class MemberService {
             e.printStackTrace();
         }
 
-        return Integer.toString(mailNum);
+        return Integer.toString(mailNum); //인증번호 String으로 반환
     }
 }

@@ -202,9 +202,9 @@
 
 <!-- 작성 한 스크립트문 -->
 <script>
-var auth = "";
+var auth = ""; // 생성한 인증번호 저장
     $('.mailCheckButton').click(function(){
-        var email = $("#email").val();
+        var email = $("#email").val(); //form 값을 가져오거나, 값을 설정
         console.log(email);
             $.ajax({
             type:"GET",
@@ -215,9 +215,9 @@ var auth = "";
             }
         });
     });
-    $(".mailCheckInput").blur(function(){
-        var authCode = $(".mailCheckInput").val();
-        if(authCode == auth){
+    $(".mailCheckInput").blur(function(){ //포커스 나가게함
+        var authCode = $(".mailCheckInput").val(); // authCode = form에 입력한 인증번호
+        if(authCode == auth){ //form에 입력한 값과 생성한 값 비교
             console.log("이메일 인증 성공");
         }else{
             console.log("이메일 인증 실패");
