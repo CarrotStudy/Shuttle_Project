@@ -47,4 +47,5 @@ public class ChatService {
     public Member findByUsername(String loginId){
         return memberService.findByLoginId(loginId).orElseThrow();
     }
+
 }
