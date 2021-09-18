@@ -23,4 +23,6 @@ public interface MemberMapper {
     void chargePoint(Member member);
     int idCheck(String loginId);
 
+
+
 }

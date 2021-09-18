@@ -2,6 +2,7 @@ package springboot.shuttle.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import springboot.shuttle.domain.ChatRoomDTO;
+import springboot.shuttle.domain.Member;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface ChatRoomMapper {
     List<ChatRoomDTO> chatRoomList(String username);
 
     ChatRoomDTO findByChatRoom(String id);
+
 }

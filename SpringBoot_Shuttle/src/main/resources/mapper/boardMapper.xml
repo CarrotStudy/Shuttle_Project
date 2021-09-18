@@ -125,7 +125,8 @@
     </select>
 
     <select id="findByWriter" parameterType="Long" resultType="String">
-        select writer from board where bno=#{bno}
+        select loginId from board where bno=#{bno}
+<!--        select writer from board where bno=#{bno}-->
     </select>
 
 </mapper>

@@ -12,11 +12,13 @@ import springboot.shuttle.domain.Board;
 import springboot.shuttle.domain.ChatRoomDTO;
 import springboot.shuttle.domain.Member;
 import springboot.shuttle.service.BoardService;
+import springboot.shuttle.service.MemberService;
 import springboot.shuttle.web.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 //아직 진행중
 @Controller
@@ -79,8 +81,8 @@ public class RoomController {
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         log.info("username={}",member.getName());
         model.addAttribute("member", member);
-        Member findUsername = service.findByUsername(member.getLoginId());
-        List<ChatRoomDTO> allRooms = service.findAllRooms(findUsername.getName());
+//        Member findUsername = service.findByUsername(member.getLoginId());
+        List<ChatRoomDTO> allRooms = service.findAllRooms(member.getLoginId());
         log.info("list={}",allRooms);
         model.addAttribute("list", allRooms);
 
@@ -130,16 +132,19 @@ public class RoomController {
 //    }
 
 
-    @PostMapping(value = "/room")
-    public String create(@RequestBody Long bno, RedirectAttributes rttr, HttpServletRequest request){
+    @GetMapping(value = "/room/{bno}")
+    public String create(@PathVariable Long bno, RedirectAttributes rttr, HttpServletRequest request){
         log.info("bno={}",bno);
         String chatRoom = boardService.findByBoardName(bno);
         String seller = boardService.findByWriter(bno);
         HttpSession session = request.getSession();
         Member buyer = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        ChatRoomDTO chatroom = service.createChatRoom(chatRoom, seller, buyer.getLoginId());
 
-        rttr.addFlashAttribute("roomName",service.createChatRoom(chatRoom, seller, buyer.getName()));
+        rttr.addFlashAttribute("roomName", chatroom);
+//        return "redirect:/chat/chatroom";
         return "redirect:/chat/chatroom";
+
     }
 
     @GetMapping("/room")
