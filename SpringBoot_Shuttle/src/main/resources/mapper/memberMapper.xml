@@ -65,13 +65,13 @@
 
     <!-- 비밀번호 변경 -->
     <update id="updatePw" parameterType="PwUpdate">
-        update members set password = #{changePw} where loginId = #{loginId}
+        update member set password = #{changePw} where loginId = #{loginId}
     </update>
     <!-- 비밀번호 변경 끝 -->
 
     <!-- 로그인 중복 처리 -->
     <select id="idCheck" parameterType="String" resultType="int">
-        select count(*) from members where loginId=#{loginId}
+        select count(*) from member where loginId=#{loginId}
     </select>
     <!-- 로그인 중복 처리 끝 -->
 

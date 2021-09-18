@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import springboot.shuttle.domain.LoginForm;
 import springboot.shuttle.domain.Member;
 import springboot.shuttle.service.MemberService;
@@ -97,5 +94,10 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @GetMapping("/mailCheck")
+    @ResponseBody
+    public String mailCheck(String email){
+        return memberService.mailSender(email);
+    }
 
 }

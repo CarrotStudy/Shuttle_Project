@@ -1,8 +1,10 @@
 package springboot.shuttle.domain;
 
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 @Data //lombok getter, setter 메서드 생성
 @AllArgsConstructor // 모든 변수를 파라미터로 갖는 생성자 생성
