@@ -19,6 +19,7 @@
         , address
         , price
         , save_name
+        , loginId
     </sql>
 
 
@@ -40,6 +41,7 @@
             , #{address}
             , #{price}
             , ""
+            , #{loginId}
         )
     </insert>
 

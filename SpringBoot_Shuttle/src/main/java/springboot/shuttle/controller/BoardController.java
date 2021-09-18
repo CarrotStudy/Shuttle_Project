@@ -48,6 +48,7 @@ public class BoardController extends UiUtils {
     @GetMapping("/board/add")
     public String boardAddForm(@RequestParam(value = "bno", required = false) Long bno, Model model) {
 
+
         if (bno == null) {
             model.addAttribute("board", new Board());
         } else {

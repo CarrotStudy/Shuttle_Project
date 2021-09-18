@@ -40,6 +40,7 @@ public class BoardService {
 
         board.setWriter(loginMember.getName());
         board.setAddress(loginMember.getAddress());
+        board.setLoginId(loginMember.getLoginId());
 
         int queryResult = 0;
 
