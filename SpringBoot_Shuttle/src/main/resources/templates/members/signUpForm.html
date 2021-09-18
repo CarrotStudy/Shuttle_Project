@@ -115,16 +115,17 @@
                    th:errorclass="field-error">
             <div class="field-error" th:errors="*{email}"/>
         <!--인증 메일 추가 자리-->
-<!--            <div><label style="margin-left: 330px;">인증번호</label></div>-->
-<!--            <div class="mailCheck">-->
-<!--                <div class="mailCheckInputBox" id="mailCheckInputFalse" style="width: 460px; height: 45px; margin-left: 330px; display: inline-block;">-->
-<!--                    <input class="form-control mailCheckInput" disabled="disabled">-->
-<!--                </div>-->
-<!--                <div class="mailCheckButton" style="width: 180px; display: inline-block;" >-->
-<!--                    <button style="color: white; border: none; border-radius: 0.2em; background-color: black; width: 100px; height: 45px; margin-left: 5px;" type="button">인증번호 발송</button>-->
-<!--                </div>-->
-<!--                <div  class="clearfix" ></div>-->
-<!--                <span id="codeWar" style="margin-left: 330px;"></span>-->
+            <div><label style="margin-left: 330px;">인증번호</label></div>
+            <div class="mailCheck">
+                <div class="mailCheckInputBox" id="mailCheckInputFalse" style="width: 460px; height: 45px; margin-left: 330px; display: inline-block;">
+                    <input class="form-control mailCheckInput">
+                </div>
+                <div class="mailCheckButton" style="width: 180px; display: inline-block;" >
+                    <button style="color: white; border: none; border-radius: 0.2em; background-color: black; width: 100px; height: 45px; margin-left: 5px;" type="button">인증번호 발송</button>
+                </div>
+                <div  class="clearfix" ></div>
+                <span id="codeWar" style="margin-left: 330px;"></span>
+            </div>
         <!--인증 메일 추가 자리-->
         </div>
         <label style="margin-left: 330px;">주소</label>
@@ -200,6 +201,30 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 
 <!-- 작성 한 스크립트문 -->
+<script>
+var auth = ""; // 생성한 인증번호 저장
+    $('.mailCheckButton').click(function(){
+        var email = $("#email").val(); //form 값을 가져오거나, 값을 설정
+        console.log(email);
+            $.ajax({
+            type:"GET",
+            url:"mailCheck?email=" + email,
+            success:function(data){
+                console.log("이메일 전송")
+                auth = data;
+            }
+        });
+    });
+    $(".mailCheckInput").blur(function(){ //포커스 나가게함
+        var authCode = $(".mailCheckInput").val(); // authCode = form에 입력한 인증번호
+        if(authCode == auth){ //form에 입력한 값과 생성한 값 비교
+            console.log("이메일 인증 성공");
+        }else{
+            console.log("이메일 인증 실패");
+        }
+    });
+</script>
+
 <script>
     /* 주소 검색 기능 */
     var address = ''; //DB변수

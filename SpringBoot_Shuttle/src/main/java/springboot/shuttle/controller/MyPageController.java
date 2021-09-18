@@ -38,7 +38,6 @@ public class MyPageController {
         }
 
 
-        //비밀번호 변경으로 이동
         @RequestMapping(value = "/changePW", method = RequestMethod.POST)
         @ResponseBody
         public String checkPw() throws Exception {

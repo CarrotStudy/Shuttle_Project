@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import springboot.shuttle.domain.LoginForm;
 import springboot.shuttle.domain.Member;
 import springboot.shuttle.service.MemberService;
@@ -85,7 +82,7 @@ public class MemberController {
         return "redirect:/";
     }
 
-    //로그아웃
+    //로그아웃 (처리 안되는 건 Security에서 logout().disable())
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         log.info("실행");
@@ -94,8 +91,14 @@ public class MemberController {
         if (session != null) {
             session.invalidate(); //로그인 되어있는 세션 완전히 삭제
         }
-        return "redirect:/";
+        return "redirect:/"; // '/' 로 이동 (index.html)
     }
 
+    //인증 메일
+    @GetMapping("/mailCheck")
+    @ResponseBody //서버에서 클라이언트로 응답 데이터 전송(즉, 자바 객체를 http 응답 본문의 객체로 변환 -> 클라이언트로 전송)
+    public String mailCheck(String email){
+        return memberService.mailSender(email);
+    }
 
 }

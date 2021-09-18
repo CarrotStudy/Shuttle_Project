@@ -23,7 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf()
-                .disable();
+                .disable()
+                .logout().disable();
     }
     @Bean
     public PasswordEncoder passwordEncoder(){
