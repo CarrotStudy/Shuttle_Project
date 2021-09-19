@@ -14,6 +14,7 @@ import springboot.shuttle.web.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller //View 반환
@@ -72,7 +73,7 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public String memberSave(@ModelAttribute Member member, BindingResult bindingResult) {
+    public String memberSave(@Valid @ModelAttribute Member member, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "members/signUpForm";
         }
