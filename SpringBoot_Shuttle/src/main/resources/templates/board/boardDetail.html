@@ -82,7 +82,7 @@
                     </div>
 
                 </form>
-                <button class="btn btn-secondary" id="enterChat" type="submit" style="margin-left: 75%;">채팅방 입장</button>
+                <button th:if="${session.loginMember != null}" class="btn btn-secondary" id="enterChat" type="submit" style="margin-left: 75%;">채팅방 입장</button>
 <!--=======-->
 <!--                <form th:action="@{/chat/room}" name = "dno" class="form-group" style="margin-top : 2rem;" th:if="${session.loginMember != null}" method="post">-->
 <!--&lt;!&ndash;                    <form th:action="@{/chat/room}" class="form-group" style="margin-top : 2rem;" th:if="${session.loginMember != null}" method="post">&ndash;&gt;-->
@@ -100,19 +100,27 @@
     $("#enterChat").click(function(){
         let bno=/*[[${board.bno}]]*/;
         console.log(bno);
-        $.ajax({
-            type:"GET",
-            url:`/chat/room/`+bno,
-            data:JSON.stringify(bno),
-            contentType:"application/json;charset=utf-8",
-            success:function(data){
-                console.log("채팅방 입장");
-                location.href="/chat/chatroom";
-            },
-            error:function(error){
-                console.log(error)
-            }
-        });
+        const loginId = /*[[${session.loginMember.loginId}]]*/;
+        const writerId = /*[[${board.loginId}]]*/;
+   
+        if(loginId === writerId){
+            alert("본인의 게시글입니다");
+            location.href="/";
+        }else{
+            $.ajax({
+                type:"GET",
+                url:`/chat/room/`+bno,
+                data:JSON.stringify(bno),
+                contentType:"application/json;charset=utf-8",
+                success:function(data){
+                    console.log("채팅방 입장");
+                    location.href="/chat/chatroom";
+                },
+                error:function(error){
+                    console.log(error)
+                }
+            });
+        }
     });
 <!--            dataType:"json",-->
 <!--    $("#btn btn-secondary").click(funciton(){-->

@@ -9,14 +9,19 @@
 <body>
     <div class="container">
         <div>
-            <h2 th:text="${member.name}">사용자 이름</h2>
+            <h2 th:text="${member.name}+'님의 채팅방'">사용자 이름</h2>
         </div>
         <div>
-            <ul th:each="room : ${list}">
-                <li><a th:href="@{/chat/room(roomId=${room.roomId})}">[[${room.name}]]</a></li>
+            <ul class ="nav nav-pills nav-stacked" th:each="room : ${list}">
+                <li><a th:href="@{/chat/room(roomId=${room.roomId})}"><sapn class="badge">[[${room.name}]]</sapn></a></li>
             </ul>
         </div>
     </div>
+    <nav>
+        <ul class="pager">
+            <li><a href="/">홈으로</a></li>
+        </ul>
+    </nav>
 <!--    <form th:action="@{/chat/room}" method="post">-->
 <!--        <input type="text" name="name" class="form-control" placeholder="개설할 방 이름 작성">-->
 <!--        <button class="btn btn-secondary" id="btn-create" type="submit">개설하기</button>-->
